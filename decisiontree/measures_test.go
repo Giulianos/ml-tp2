@@ -32,3 +32,14 @@ func TestEntropy(t *testing.T) {
 		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
 	}
 }
+
+func TestSVEntropy(t *testing.T) {
+	dt := NewDecisionTree(testExamples, "juega")
+
+	expectedEntropy := -(6./8.)*math.Log2(6./8.) - (2./8.)*math.Log2(2./8.)
+	actualEntropy, _ := dt.svEntropy(testExamples, "viento", "debil")
+
+	if math.Abs(expectedEntropy-actualEntropy) > 0.0001 {
+		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
+	}
+}

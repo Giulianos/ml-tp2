@@ -4,20 +4,20 @@ type Example map[string]string
 
 type DecisionTree struct {
 	predAttr string
-	domain   map[string][]string
+	domain   map[string]map[string]string
 }
 
 func NewDecisionTree(examples []Example, predictedAttribute string) DecisionTree {
 	ret := DecisionTree{predAttr: predictedAttribute}
-	domain := make(map[string]map[string]string)
+	ret.domain = make(map[string]map[string]string)
 
 	for _, example := range examples {
 		for attr, value := range example {
-			_, ok := domain[attr]
+			_, ok := ret.domain[attr]
 			if !ok {
-				domain[attr] = make(map[string]string)
+				ret.domain[attr] = make(map[string]string)
 			}
-			domain[attr][value] = "1"
+			ret.domain[attr][value] = "1"
 		}
 	}
 
