@@ -46,7 +46,7 @@ func (dt DecisionTree) gain(examples []Example, attr string) float64 {
 	examplesLen := float64(len(examples))
 	for value := range dt.domain[attr] {
 		svH, svLen := dt.svEntropy(examples, attr, value)
-		gain += (svLen / examplesLen) * svH
+		gain -= (svLen / examplesLen) * svH
 	}
 
 	return gain

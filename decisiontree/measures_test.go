@@ -43,3 +43,28 @@ func TestSVEntropy(t *testing.T) {
 		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
 	}
 }
+
+func TestGain(t *testing.T) {
+	dt := NewDecisionTree(testExamples, "juega")
+
+	// Expected discriminant attribute
+	expDiscAttr := "pronostico"
+
+	// Find discriminant attribute
+	discAttr := ""
+	var discAttrGain float64
+	for attr := range dt.domain {
+		if attr == dt.predAttr {
+			continue
+		}
+		gain := dt.gain(testExamples, attr)
+		if gain > discAttrGain {
+			discAttr = attr
+			discAttrGain = gain
+		}
+	}
+
+	if discAttr != expDiscAttr {
+		t.Errorf("Expected: %s, got: %s", expDiscAttr, discAttr)
+	}
+}
