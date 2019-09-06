@@ -1,16 +1,28 @@
 package decisiontree
 
-type AttrNode struct {
-	attr     string
-	children []*ValNode
+type NodeType uint16
+
+const (
+	ATTR NodeType = iota
+	VALUE
+	CLASS
+)
+
+func (nt NodeType) String() string {
+	switch nt {
+	case ATTR:
+		return "Attribute"
+	case VALUE:
+		return "Value"
+	case CLASS:
+		return "Class"
+	}
+	return "Undefined Node Type"
 }
 
-type ValNode struct {
-	val      string
-	children []*AttrNode
-	class    *ClassNode
-}
-
-type ClassNode struct {
-	class string
+type Node interface {
+	Type() NodeType
+	IsLeaf() bool
+	Children() []*Node
+	Tag() string
 }
