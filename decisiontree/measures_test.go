@@ -22,13 +22,13 @@ var testExamples = []Example{
 	{"pronostico": "lluvioso", "temp": "templado", "humedad": "alta", "viento": "fuerte", "juega": "no"},
 }
 
-func TestSomething(t *testing.T) {
+func TestEntropy(t *testing.T) {
 	dt := NewDecisionTree(testExamples, "juega")
 
-	expectedEntropy := -(9/14)*math.Log2(9/14) - (5/14)*math.Log2(5/14)
+	expectedEntropy := -(9./14.)*math.Log2(9./14.) - (5./14.)*math.Log2(5./14.)
 	actualEntropy := dt.sEntropy(testExamples)
 
-	if math.Abs(expectedEntropy-actualEntropy) > 0.001 {
+	if math.Abs(expectedEntropy-actualEntropy) > 0.0001 {
 		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
 	}
 }
