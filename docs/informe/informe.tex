@@ -1,0 +1,66 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Required for including images
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{courier}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\lstset{
+    basicstyle=\ttfamily,
+    language=Octave,
+    morecomment = [l][\itshape\color{blue}]{\%}
+}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+
+\newcommand{\bold}[1]{\textbf{\texttt{#1}}}
+
+\title{TP 2: Algoritmos de Clasificación Supervisada}
+\author{Giuliano Scaglioni}
+\date{Septiembre 2019}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+
+\newpage
+
+\setcounter{page}{1}
+
+\section{Deportes en el río}
+  \subsection{Implementación}
+  La implementación del programa se realizó en Go utilizando el algoritmo ID3 para construir el árbol de decision.
+  En la implementación se definieron las siguientes entidades
+  \begin{itemize}
+    \item \bold{Example}: representa un ejemplo, su implementación es un mapa donde cada entrada tiene como clave el nombre del atributo y como valor, el valor que tiene ese atributo en el ejemplo.
+    \item \bold{DecisionTree}: representa un árbol de decisión, para crear uno, se pasa una lista de ejemplos y el nombre del atributo a predecir. La implementación interna de esta entidad utiliza el algoritmo ID3 para crearlo. En la creación de un árbol de decisión, a su vez, se utilizan otras entidades, estas son:
+    \begin{itemize}
+      \item \bold{Node}: representa un nodo del arbol de decisión y define comportamiento para obtener el tipo de nodo, obtener la lista de hijos de este, agregar hijos, entre otros métodos necesarios para su representación.
+      \item \bold{AttrNode}: es una implementación de Node para los nodos que representan un atributo.
+      \item \bold{ValNode}: es una implementación de Node para los nodos que representan los valores posibles de un atributo.
+      \item \bold{ClassNode}: es una implementación de Node para los nodos que representan una clase. Esta implementación no permite agregar hijos pues este tipo de nodos siempre es hoja.
+    \end{itemize}
+  \end{itemize}
+
+
+
+    
+\end{document}
