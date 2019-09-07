@@ -1,10 +1,13 @@
 package decisiontree
 
+import "fmt"
+
 type Example map[string]string
 
 type DecisionTree struct {
 	predAttr string
 	domain   map[string]map[string]string
+	tree     Node
 }
 
 func NewDecisionTree(examples []Example, predictedAttribute string) DecisionTree {
@@ -21,5 +24,12 @@ func NewDecisionTree(examples []Example, predictedAttribute string) DecisionTree
 		}
 	}
 
+	// Build tree using id3 algorithm
+	ret.tree = ret.buildTree(examples)
+
 	return ret
+}
+
+func (dt DecisionTree) String() string {
+	return fmt.Sprintf("digraph G {\n%s}", dt.tree.DotString())
 }

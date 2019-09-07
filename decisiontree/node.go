@@ -1,5 +1,7 @@
 package decisiontree
 
+import "sync"
+
 type NodeType uint16
 
 const (
@@ -20,9 +22,24 @@ func (nt NodeType) String() string {
 	return "Undefined Node Type"
 }
 
+var nextID uint64 = 0
+
+var mutex = &sync.Mutex{}
+
+func generateId() uint64 {
+	mutex.Lock()
+	id := nextID
+	nextID++
+	mutex.Unlock()
+	return id
+}
+
 type Node interface {
 	Type() NodeType
 	IsLeaf() bool
-	Children() []*Node
+	Children() []Node
 	Tag() string
+	Id() uint64
+	DotString() string
+	AddChild(child Node) error
 }

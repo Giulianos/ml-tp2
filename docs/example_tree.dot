@@ -1,0 +1,35 @@
+digraph G {
+    0[label="Pronostico"]
+        0 -> 1
+        1[label="Sol"]
+            1 -> 4
+            4[label="Humedad"]
+                4 -> 7
+                7[label="Alta"]
+                    7->13
+                    13[label="NO", shape="box", color="blue"]
+
+                4 -> 8
+                8[label="Normal"]
+                    8->14
+                    14[label="SI", shape="box", color="blue"]
+
+        0 -> 2
+        2[label="Nublado"]
+            2 -> 5
+            5[label="SI", shape="box", color="blue"]
+
+        0 -> 3
+        3[label="Lluvioso"]
+            3 -> 6
+            6[label="Viento"]
+                6 -> 9
+                9[label="Fuerte"]
+                    9->11
+                    11[label="NO", shape="box", color="blue"]
+
+                6 -> 10
+                10[label="Debil"]
+                    10->12
+                        12[label="SI", shape="box", color="blue"]
+}
