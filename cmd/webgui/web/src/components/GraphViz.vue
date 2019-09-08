@@ -32,18 +32,6 @@ export default {
         this.$emit('error', err.message)
       }
     }
-    // renderDebounced: _.debounce(function (data) {
-    //   try {
-    //     this.render(data)
-    //     this.$emit('error', '')
-    //   } catch (err) {
-    //     // render error to label later
-    //     console.log('error', err.message)
-    //
-    //     this.$emit('error', err.message)
-    //   }
-    //   // $(this.$el).html(Viz(data))
-    // }, 500)
   }
 }
 </script>

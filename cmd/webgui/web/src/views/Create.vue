@@ -1,7 +1,7 @@
 <template lang="pug">
 .create-view
-  form.build
-    textarea(placeholder="Insertar el dataset en CSV aca")
+  form.build(@submit.prevent='sendCSV')
+    textarea(v-model='csvData' placeholder='Insertar el dataset en CSV aca')
     button
       | Crear árbol
   GraphViz(dotData='digraph { a-> b }').graph
@@ -10,8 +10,20 @@
 <script>
 // @ is an alias to /src
 import GraphViz from '@/components/GraphViz.vue'
+import { create } from '@/services/tree'
 
 export default {
+  data () {
+    return {
+      csvData: '',
+      predAttr: 'disfruta'
+    }
+  },
+  methods: {
+    sendCSV () {
+      create(this.csvData, this.predAttr)
+    }
+  },
   name: 'home',
   components: {
     GraphViz
