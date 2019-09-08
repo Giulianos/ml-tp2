@@ -1,17 +1,45 @@
 <template lang="pug">
-  .home
-    img(alt="Vue logo" src="../assets/logo.png")
-    HelloWorld(msg="Welcome to Your Vue.js App")
+.create-view
+  form.build
+    textarea(placeholder="Insertar el dataset en CSV aca")
+    button
+      | Crear árbol
+  GraphViz(dotData='digraph { a-> b }').graph
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import GraphViz from '@/components/GraphViz.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    GraphViz
   }
 }
 </script>
+
+<style lang="scss" scoped>
+$view-max-width: 600px;
+
+.create-view {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.build {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: $view-max-width;
+
+  textarea {
+    height: 100px;
+  }
+}
+
+.graph {
+  max-width: $view-max-width;
+}
+</style>
