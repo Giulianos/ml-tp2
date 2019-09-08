@@ -15,8 +15,8 @@ func HandleGetGraph(dt *decisiontree.DecisionTree) http.HandlerFunc {
 			writer.WriteHeader(400)
 			bufWriter.WriteString("Tree is not built")
 		} else {
-			writer.WriteHeader(200)
 			writer.Header().Set("Content-Type", "text/vnd.graphviz")
+			writer.WriteHeader(200)
 			bufWriter.WriteString(dt.String())
 		}
 		bufWriter.Flush()

@@ -34,6 +34,12 @@ func generateId() uint64 {
 	return id
 }
 
+func resetIdGenerator() {
+	mutex.Lock()
+	nextID = 0
+	mutex.Unlock()
+}
+
 type Node interface {
 	Type() NodeType
 	IsLeaf() bool

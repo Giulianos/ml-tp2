@@ -26,6 +26,7 @@ func NewDecisionTree(examples []Example, predictedAttribute string) (DecisionTre
 	}
 
 	// Build tree using id3 algorithm
+	resetIdGenerator()
 	tree, err := ret.buildTree(examples)
 
 	// Save built tree
