@@ -3,8 +3,8 @@
     #nav
       router-link.mr-1(to="/")
         | Crear Árbol
-      router-link(to="/about")
-        | Info
+      router-link(to="/view")
+        | Ver Árbol
     router-view
 </template>
 

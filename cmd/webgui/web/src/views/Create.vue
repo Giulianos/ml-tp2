@@ -4,7 +4,6 @@
     textarea(v-model='csvData' placeholder='Insertar el dataset en CSV aca')
     button
       | Crear árbol
-  GraphViz(dotData='digraph { a-> b }').graph
 </template>
 
 <script>

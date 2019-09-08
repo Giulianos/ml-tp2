@@ -6,8 +6,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
 	"github.com/gorilla/mux"
+
+	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/gorilla/handlers"
 )
 
 var dt decisiontree.DecisionTree
@@ -18,8 +20,21 @@ func main() {
 	r.HandleFunc("/tree", HandleNewTree(&dt, &dtMutex)).Methods("POST")
 	r.HandleFunc("/graph", HandleGetGraph(&dt)).Methods("GET")
 
+	corsHandler := handlers.CORS(
+		handlers.AllowedHeaders([]string{
+			"X-Requested-With",
+			"Content-Type",
+			"Authorization",
+		}), handlers.AllowedMethods([]string{
+			"GET",
+			"POST",
+			"PUT",
+			"HEAD",
+			"OPTIONS",
+		}), handlers.AllowedOrigins([]string{"*"}))(r)
+
 	srv := &http.Server{
-		Handler:      r,
+		Handler:      corsHandler,
 		Addr:         ":8000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
