@@ -8,9 +8,10 @@ type DecisionTree struct {
 	predAttr string
 	domain   map[string]map[string]string
 	tree     Node
+	Built    bool
 }
 
-func NewDecisionTree(examples []Example, predictedAttribute string) DecisionTree {
+func NewDecisionTree(examples []Example, predictedAttribute string) (DecisionTree, error) {
 	ret := DecisionTree{predAttr: predictedAttribute}
 	ret.domain = make(map[string]map[string]string)
 
@@ -25,9 +26,13 @@ func NewDecisionTree(examples []Example, predictedAttribute string) DecisionTree
 	}
 
 	// Build tree using id3 algorithm
-	ret.tree = ret.buildTree(examples)
+	tree, err := ret.buildTree(examples)
 
-	return ret
+	// Save built tree
+	ret.tree = tree
+	ret.Built = true
+
+	return ret, err
 }
 
 func (dt DecisionTree) String() string {

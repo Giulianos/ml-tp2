@@ -1,13 +1,11 @@
 package decisiontree
 
-import "log"
-
-func (dt DecisionTree) buildTree(examples []Example) Node {
+func (dt DecisionTree) buildTree(examples []Example) (Node, error) {
 	sameClass := dt.isDataPure(examples)
 
 	// All examples are classified with the same class
 	if sameClass != nil {
-		return NewClassNode(*sameClass)
+		return NewClassNode(*sameClass), nil
 	}
 
 	// Otherwise find discriminant attribute and build the node
@@ -15,35 +13,39 @@ func (dt DecisionTree) buildTree(examples []Example) Node {
 	attrNode := NewAttrNode(*discrAttr)
 
 	// Get val subtrees for each attribute value
-	valNodes := dt.buildValSubTrees(examples, *discrAttr)
+	valNodes, err := dt.buildValSubTrees(examples, *discrAttr)
+	if err != nil {
+		return nil, err
+	}
 
 	// Add val subtrees to the attr node
 	for _, node := range valNodes {
 		e := attrNode.AddChild(node)
 		if e != nil {
-			log.Fatal(e)
+			return nil, e
 		}
 	}
 
-	return attrNode
+	return attrNode, nil
 }
 
-func (dt DecisionTree) buildValSubTrees(examples []Example, attr string) []ValNode {
+func (dt DecisionTree) buildValSubTrees(examples []Example, attr string) ([]ValNode, error) {
 	splittedData := dt.splitData(examples, attr)
 	nodes := make([]ValNode, len(splittedData))
 
 	var idx int
 	for val, examples := range splittedData {
 		node := NewValNode(val)
-		err := node.AddChild(dt.buildTree(examples))
+		subtree, _ := dt.buildTree(examples)
+		err := node.AddChild(subtree)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 		nodes[idx] = node
 		idx++
 	}
 
-	return nodes
+	return nodes, nil
 }
 
 func (dt DecisionTree) splitData(examples []Example, attr string) map[string][]Example {
