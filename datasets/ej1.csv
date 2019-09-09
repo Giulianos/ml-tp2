@@ -1,0 +1,6 @@
+cielo,temperatura,humedad,viento,agua,pronostico,disfruta
+sol,calida,normal,fuerte,calida,estable,si
+sol,calida,alta,fuerte,calida,estable,si
+nublado,frio,alta,fuerte,calida,cambiante,no
+sol,calida,alta,fuerte,fria,cambiante,si
+sol,calida,normal,debil,calida,estable,no

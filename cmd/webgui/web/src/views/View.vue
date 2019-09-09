@@ -1,8 +1,8 @@
 <template lang="pug">
   .view
-    GraphViz(:dotData='graph')
     button(type="button" @click='reloadGraph()')
       | Recargar
+    GraphViz(:dotData='graph')
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   name: 'view',
   data () {
     return {
-      graph: 'digraph { a-> b }'
+      graph: ''
     }
   },
   components: {

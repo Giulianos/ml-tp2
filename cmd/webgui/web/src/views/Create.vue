@@ -1,8 +1,9 @@
 <template lang="pug">
 .create-view
   form.build(@submit.prevent='sendCSV')
-    textarea(v-model='csvData' placeholder='Insertar el dataset en CSV aca')
-    button
+    textarea.mb-1(v-model='csvData' placeholder='Insertar el dataset en CSV aca')
+    input.mb-1(v-model='predAttr' placeholder='Atributo a predecir')
+    button.mb-1
       | Crear árbol
 </template>
 
@@ -15,7 +16,7 @@ export default {
   data () {
     return {
       csvData: '',
-      predAttr: 'disfruta'
+      predAttr: ''
     }
   },
   methods: {
@@ -52,5 +53,9 @@ $view-max-width: 600px;
 
 .graph {
   max-width: $view-max-width;
+}
+
+.mb-1 {
+  margin-bottom: 10px;
 }
 </style>
