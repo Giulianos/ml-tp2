@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 )
@@ -26,7 +27,11 @@ func main() {
 		examples = append(examples, newExample)
 	}
 
-	dt := decisiontree.NewDecisionTree(examples, "disfruta")
+	dt, err := decisiontree.NewDecisionTree(examples, "disfruta")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Print(dt)
 }
