@@ -9,10 +9,12 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/Giulianos/ml-decision-tree/classifier"
+
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 )
 
-func csvToExamples(r io.Reader) ([]decisiontree.Example, error) {
+func csvToExamples(r io.Reader) ([]classifier.Example, error) {
 	csvReader := csv.NewReader(r)
 
 	attrs, err := csvReader.Read()
@@ -20,14 +22,14 @@ func csvToExamples(r io.Reader) ([]decisiontree.Example, error) {
 		return nil, fmt.Errorf("error reading dataset")
 	}
 
-	var examples []decisiontree.Example
+	var examples []classifier.Example
 
 	for {
 		record, err := csvReader.Read()
 		if err == io.EOF {
 			break
 		}
-		newExample := decisiontree.Example{}
+		newExample := classifier.Example{}
 		for fieldPos, fieldValue := range record {
 			newExample[attrs[fieldPos]] = fieldValue
 		}
@@ -43,6 +45,7 @@ func HandleNewTree(dt *decisiontree.DecisionTree, dtMutex *sync.Mutex) http.Hand
 
 		// Create dataset from received csv
 		examples, err := csvToExamples(request.Body)
+		log.Print(examples)
 
 		// Get predicted attribute
 		predAttr := request.URL.Query()["pred-attr"][0]

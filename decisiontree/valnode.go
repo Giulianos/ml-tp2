@@ -6,6 +6,7 @@ type ValNode struct {
 	val      string
 	children *[]Node
 	id       uint64
+	depth    int
 }
 
 func NewValNode(val string) ValNode {
@@ -31,6 +32,10 @@ func (n ValNode) Tag() string {
 
 func (n ValNode) Id() uint64 {
 	return n.id
+}
+
+func (n ValNode) Depth() int {
+	return n.depth
 }
 
 func (n ValNode) DotString() string {

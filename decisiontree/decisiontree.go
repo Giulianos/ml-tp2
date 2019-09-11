@@ -1,19 +1,25 @@
 package decisiontree
 
-import "fmt"
+import (
+	"fmt"
 
-type Example map[string]string
+	"github.com/Giulianos/ml-decision-tree/classifier"
+)
 
 type DecisionTree struct {
-	predAttr string
-	domain   map[string]map[string]string
-	tree     Node
-	Built    bool
+	predAttr    string
+	domain      map[string]map[string]string
+	tree        Node
+	Built       bool
+	nodeCount   int
+	maxSplits   int
+	splitsCount int
 }
 
-func NewDecisionTree(examples []Example, predictedAttribute string) (DecisionTree, error) {
+func NewDecisionTree(examples []classifier.Example, predictedAttribute string) (DecisionTree, error) {
 	ret := DecisionTree{predAttr: predictedAttribute}
 	ret.domain = make(map[string]map[string]string)
+	ret.maxSplits = 3
 
 	for _, example := range examples {
 		for attr, value := range example {
@@ -34,6 +40,17 @@ func NewDecisionTree(examples []Example, predictedAttribute string) (DecisionTre
 	ret.Built = true
 
 	return ret, err
+}
+
+func (dt DecisionTree) GetClasses() []string {
+	classes := make([]string, len(dt.domain[dt.predAttr]))
+	var idx int
+	for class := range dt.domain[dt.predAttr] {
+		classes[idx] = class
+		idx++
+	}
+
+	return classes
 }
 
 func (dt DecisionTree) String() string {

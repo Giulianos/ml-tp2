@@ -2,9 +2,11 @@ package decisiontree
 
 import (
 	"math"
+
+	"github.com/Giulianos/ml-decision-tree/classifier"
 )
 
-func (dt DecisionTree) sEntropy(examples []Example) float64 {
+func (dt DecisionTree) sEntropy(examples []classifier.Example) float64 {
 	relFreq := make(map[string]float64)
 
 	for _, example := range examples {
@@ -19,7 +21,7 @@ func (dt DecisionTree) sEntropy(examples []Example) float64 {
 	return entropy
 }
 
-func (dt DecisionTree) svEntropy(examples []Example, attr string, val string) (entropy float64, svLen float64) {
+func (dt DecisionTree) svEntropy(examples []classifier.Example, attr string, val string) (entropy float64, svLen float64) {
 	freqs := make(map[string]float64)
 	var svSize float64
 
@@ -38,10 +40,12 @@ func (dt DecisionTree) svEntropy(examples []Example, attr string, val string) (e
 		svEntropy -= pi * math.Log2(pi)
 	}
 
+	//log.Printf("svEntropy(%s=%s)=%f", attr, val, svEntropy)
+
 	return svEntropy, svSize
 }
 
-func (dt DecisionTree) gain(examples []Example, attr string) float64 {
+func (dt DecisionTree) gain(examples []classifier.Example, attr string) float64 {
 	gain := dt.sEntropy(examples)
 	examplesLen := float64(len(examples))
 	for value := range dt.domain[attr] {

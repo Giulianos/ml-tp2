@@ -6,6 +6,7 @@ type AttrNode struct {
 	attr     string
 	children *[]Node
 	id       uint64
+	depth    int
 }
 
 func NewAttrNode(attr string) AttrNode {
@@ -31,6 +32,10 @@ func (n AttrNode) Tag() string {
 
 func (n AttrNode) Id() uint64 {
 	return n.id
+}
+
+func (n AttrNode) Depth() int {
+	return n.depth
 }
 
 func (n AttrNode) DotString() string {

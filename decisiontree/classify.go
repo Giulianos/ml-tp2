@@ -1,12 +1,16 @@
 package decisiontree
 
-import "log"
+import (
+	"log"
 
-func (dt DecisionTree) Classify(example Example) string {
-	return recClassify(dt.tree, example)
+	"github.com/Giulianos/ml-decision-tree/classifier"
+)
+
+func (dt DecisionTree) Classify(example classifier.Example) (string, float64) {
+	return recClassify(dt.tree, example), 1.0
 }
 
-func recClassify(node Node, example Example) string {
+func recClassify(node Node, example classifier.Example) string {
 	if node.IsLeaf() && node.Type() == CLASS {
 		return node.Tag()
 	}

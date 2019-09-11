@@ -5,6 +5,7 @@ import "fmt"
 type ClassNode struct {
 	class string
 	id    uint64
+	depth int
 }
 
 func NewClassNode(class string) ClassNode {
@@ -37,4 +38,8 @@ func (n ClassNode) DotString() string {
 
 func (n ClassNode) AddChild(child Node) error {
 	return fmt.Errorf("Can't add children to a class node\n")
+}
+
+func (n ClassNode) Depth() int {
+	return n.depth
 }

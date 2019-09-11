@@ -48,4 +48,5 @@ type Node interface {
 	Id() uint64
 	DotString() string
 	AddChild(child Node) error
+	Depth() int
 }
