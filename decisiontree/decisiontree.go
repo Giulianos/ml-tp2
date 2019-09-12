@@ -7,39 +7,59 @@ import (
 )
 
 type DecisionTree struct {
-	predAttr    string
-	domain      map[string]map[string]string
-	tree        Node
-	Built       bool
-	nodeCount   int
-	maxSplits   int
-	splitsCount int
+	predAttr     string
+	domain       map[string]map[string]string
+	tree         Node
+	Built        bool
+	nodeCount    int
+	maxSplits    int
+	splitsCount  int
+	gainFunction GainFunction
 }
 
-func NewDecisionTree(examples []classifier.Example, predictedAttribute string) (DecisionTree, error) {
-	ret := DecisionTree{predAttr: predictedAttribute}
-	ret.domain = make(map[string]map[string]string)
-	ret.maxSplits = 3
+type GainFunction uint16
 
+const (
+	SHANNON_ENTROPY GainFunction = iota
+	GINI
+)
+
+func (dt *DecisionTree) Fit(examples []classifier.Example) error {
 	for _, example := range examples {
 		for attr, value := range example {
-			_, ok := ret.domain[attr]
+			_, ok := dt.domain[attr]
 			if !ok {
-				ret.domain[attr] = make(map[string]string)
+				dt.domain[attr] = make(map[string]string)
 			}
-			ret.domain[attr][value] = "1"
+			dt.domain[attr][value] = "1"
 		}
 	}
 
 	// Build tree using id3 algorithm
 	resetIdGenerator()
-	tree, err := ret.buildTree(examples)
+	tree, err := dt.buildTree(examples)
 
 	// Save built tree
-	ret.tree = tree
-	ret.Built = true
+	dt.tree = tree
+	dt.Built = true
 
-	return ret, err
+	return err
+}
+
+func NewDecisionTree(predictedAttribute string) DecisionTree {
+	ret := DecisionTree{predAttr: predictedAttribute}
+	ret.domain = make(map[string]map[string]string)
+	ret.maxSplits = -1
+
+	return ret
+}
+
+func (dt *DecisionTree) SetMaxSplits(splits int) {
+	dt.maxSplits = splits
+}
+
+func (dt *DecisionTree) SetGainFunction(function GainFunction) {
+	dt.gainFunction = function
 }
 
 func (dt DecisionTree) GetClasses() []string {
