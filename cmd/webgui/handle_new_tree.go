@@ -52,7 +52,11 @@ func HandleNewTree(dt *decisiontree.DecisionTree, dtMutex *sync.Mutex) http.Hand
 		log.Println(predAttr)
 
 		// Create tree
-		tree, err := decisiontree.NewDecisionTree(examples, predAttr)
+		tree := decisiontree.NewDecisionTree(predAttr)
+		tree.SetGainFunction(decisiontree.GINI)
+		tree.SetMaxSplits(3)
+		err = tree.Fit(examples)
+
 		if err != nil {
 			writer.WriteHeader(500)
 			bufWriter.WriteString("Error building the tree")

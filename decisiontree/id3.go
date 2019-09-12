@@ -2,6 +2,7 @@ package decisiontree
 
 import (
 	"log"
+	"math"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
 )
@@ -93,6 +94,10 @@ func (dt DecisionTree) discriminantAttribute(examples []classifier.Example) *str
 	var discrAttr string
 	var discrAttrGain float64
 
+	if dt.gainFunction == GINI {
+		discrAttrGain = math.MaxFloat64
+	}
+
 	for attr := range dt.domain {
 		if attr == dt.predAttr {
 			continue
@@ -106,6 +111,7 @@ func (dt DecisionTree) discriminantAttribute(examples []classifier.Example) *str
 		}
 		if dt.gainFunction == GINI {
 			attrGini := dt.giniIndex(examples, attr)
+			log.Printf("Gini(%s)=%f", attr, attrGini)
 			if attrGini < discrAttrGain {
 				discrAttr = attr
 				discrAttrGain = attrGini
