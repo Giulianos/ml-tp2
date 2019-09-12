@@ -97,11 +97,19 @@ func (dt DecisionTree) discriminantAttribute(examples []classifier.Example) *str
 		if attr == dt.predAttr {
 			continue
 		}
-		attrGain := dt.gain(examples, attr)
-		//log.Printf("Gain(%s)=%f", attr, attrGain)
-		if attrGain > discrAttrGain {
-			discrAttr = attr
-			discrAttrGain = attrGain
+		if dt.gainFunction == SHANNON_ENTROPY {
+			attrGain := dt.gain(examples, attr)
+			if attrGain > discrAttrGain {
+				discrAttr = attr
+				discrAttrGain = attrGain
+			}
+		}
+		if dt.gainFunction == GINI {
+			attrGini := dt.giniIndex(examples, attr)
+			if attrGini < discrAttrGain {
+				discrAttr = attr
+				discrAttrGain = attrGini
+			}
 		}
 	}
 
