@@ -1,17 +1,21 @@
 package bagging
 
 import (
+	"math/rand"
+
 	"github.com/Giulianos/ml-decision-tree/classifier"
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 )
 
 type Bagging struct {
 	classifiers []decisiontree.DecisionTree
+	rng         *rand.Rand
 }
 
-func NewBagging(quantity int) Bagging {
+func NewBagging(quantity int, seed int64) Bagging {
 	return Bagging{
 		classifiers: make([]decisiontree.DecisionTree, quantity),
+		rng:         rand.New(rand.NewSource(seed)),
 	}
 }
 
