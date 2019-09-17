@@ -8,11 +8,12 @@ import (
 )
 
 type Bagging struct {
+	predAttr    string
 	classifiers []decisiontree.DecisionTree
 	rng         *rand.Rand
 }
 
-func NewBagging(quantity int, seed int64) Bagging {
+func NewBagging(predAttr string, quantity int, seed int64) Bagging {
 	return Bagging{
 		classifiers: make([]decisiontree.DecisionTree, quantity),
 		rng:         rand.New(rand.NewSource(seed)),
