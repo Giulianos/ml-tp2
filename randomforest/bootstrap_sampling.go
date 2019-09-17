@@ -1,8 +1,8 @@
-package bagging
+package randomforest
 
 import "github.com/Giulianos/ml-decision-tree/classifier"
 
-func (b Bagging) getBootstrapSample(examples []classifier.Example) []classifier.Example {
+func (b RandomForest) getBootstrapSample(examples []classifier.Example) []classifier.Example {
 	sample := make([]classifier.Example, len(examples))
 
 	for i := range sample {

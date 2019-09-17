@@ -1,4 +1,4 @@
-package bagging
+package randomforest
 
 import (
 	"math/rand"
@@ -8,15 +8,15 @@ import (
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 )
 
-type Bagging struct {
+type RandomForest struct {
 	predAttr    string
 	classifiers []decisiontree.DecisionTree
 	classes     []string
 	rng         *rand.Rand
 }
 
-func NewBagging(predAttr string, quantity int, seed int64) Bagging {
-	ret := Bagging{
+func New(predAttr string, quantity int, seed int64) RandomForest {
+	ret := RandomForest{
 		classifiers: make([]decisiontree.DecisionTree, quantity),
 		rng:         rand.New(rand.NewSource(seed)),
 	}
@@ -28,7 +28,7 @@ func NewBagging(predAttr string, quantity int, seed int64) Bagging {
 	return ret
 }
 
-func (b *Bagging) Fit(examples []classifier.Example) error {
+func (b *RandomForest) Fit(examples []classifier.Example) error {
 	for _, decTree := range b.classifiers {
 		err := decTree.Fit(examples)
 		if err != nil {
@@ -39,7 +39,7 @@ func (b *Bagging) Fit(examples []classifier.Example) error {
 	return nil
 }
 
-func (b *Bagging) saveClasses(examples []classifier.Example) {
+func (b *RandomForest) saveClasses(examples []classifier.Example) {
 	classesSet := make(map[string]int)
 	for _, example := range examples {
 		class := example[b.predAttr]
@@ -52,6 +52,6 @@ func (b *Bagging) saveClasses(examples []classifier.Example) {
 	}
 }
 
-func (b Bagging) GetClasses() []string {
+func (b RandomForest) GetClasses() []string {
 	return b.classes
 }

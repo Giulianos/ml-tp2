@@ -1,8 +1,8 @@
-package bagging
+package randomforest
 
 import "github.com/Giulianos/ml-decision-tree/classifier"
 
-func (b Bagging) Classify(example classifier.Example) (string, float64) {
+func (b RandomForest) Classify(example classifier.Example) (string, float64) {
 	classifications := make(map[string]float64)
 	for _, decTree := range b.classifiers {
 		class, _ := decTree.Classify(example)
