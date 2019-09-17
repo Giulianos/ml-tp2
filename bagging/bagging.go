@@ -16,10 +16,27 @@ type Bagging struct {
 }
 
 func NewBagging(predAttr string, quantity int, seed int64) Bagging {
-	return Bagging{
+	ret := Bagging{
 		classifiers: make([]decisiontree.DecisionTree, quantity),
 		rng:         rand.New(rand.NewSource(seed)),
 	}
+
+	for i := 0; i < quantity; i++ {
+		ret.classifiers = append(ret.classifiers, decisiontree.NewDecisionTree(predAttr))
+	}
+
+	return ret
+}
+
+func (b *Bagging) Fit(examples []classifier.Example) error {
+	for _, decTree := range b.classifiers {
+		err := decTree.Fit(examples)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (b *Bagging) saveClasses(examples []classifier.Example) {
