@@ -32,6 +32,7 @@ func MarshallHeaders(example classifier.Example) []string {
 	var i int
 	for key := range example {
 		headers[i] = key
+		i++
 	}
 
 	return headers
