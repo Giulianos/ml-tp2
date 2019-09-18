@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"flag"
 	"log"
+	"math/rand"
 	"os"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
@@ -13,8 +14,13 @@ import (
 )
 
 func randomSplit(examples []classifier.Example, testPortion float64) ([]classifier.Example, []classifier.Example) {
-	// TODO: implement method
-	return nil, nil
+	rand.Shuffle(len(examples), func(i, j int) {
+		examples[i], examples[j] = examples[j], examples[i]
+	})
+
+	testSize := int(float64(len(examples)) * testPortion)
+
+	return examples[0:testSize], examples[testSize:]
 }
 
 func writeSet(examples []classifier.Example, filename string) error {
