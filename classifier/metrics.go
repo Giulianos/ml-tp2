@@ -2,6 +2,7 @@ package classifier
 
 import (
 	"fmt"
+	"sort"
 )
 
 type Metrics struct {
@@ -143,6 +144,8 @@ func (metrics Metrics) ConfusionMatrixToString() string {
 	}
 
 	rep += "\t"
+
+	sort.Strings(metrics.classes)
 
 	for _, colClass := range metrics.classes {
 		if colClass == "" {

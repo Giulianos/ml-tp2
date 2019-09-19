@@ -10,31 +10,55 @@ import (
 
 type RandomForest struct {
 	predAttr    string
-	classifiers []decisiontree.DecisionTree
+	quantity    int
+	classifiers []*decisiontree.DecisionTree
 	classes     []string
 	rng         *rand.Rand
 }
 
 func New(predAttr string, quantity int, seed int64) RandomForest {
 	ret := RandomForest{
-		classifiers: make([]decisiontree.DecisionTree, quantity),
+		classifiers: make([]*decisiontree.DecisionTree, quantity),
 		rng:         rand.New(rand.NewSource(seed)),
+		predAttr:    predAttr,
+		quantity:    quantity,
 	}
 
-	for i := 0; i < quantity; i++ {
-		ret.classifiers = append(ret.classifiers, decisiontree.NewDecisionTree(predAttr))
+	for i := 0; i < ret.quantity; i++ {
+		decTree := decisiontree.NewDecisionTree(predAttr)
+		ret.classifiers[i] = &decTree
 	}
 
 	return ret
 }
 
+func (rf *RandomForest) SetMaxSplits(splits int) {
+	for _, decTree := range rf.classifiers {
+		decTree.SetMaxSplits(splits)
+	}
+}
+
+func (rf *RandomForest) SetGainFunction(function decisiontree.GainFunction) {
+	for _, decTree := range rf.classifiers {
+		decTree.SetGainFunction(function)
+	}
+}
+
+func (rf *RandomForest) SetMinSplitCount(count int) {
+	for _, decTree := range rf.classifiers {
+		decTree.SetMinSplitCount(count)
+	}
+}
+
 func (b *RandomForest) Fit(examples []classifier.Example) error {
-	for _, decTree := range b.classifiers {
-		err := decTree.Fit(examples)
+	for i := 0; i < b.quantity; i++ {
+		err := b.classifiers[i].Fit(examples)
 		if err != nil {
 			return err
 		}
 	}
+
+	b.saveClasses(examples)
 
 	return nil
 }

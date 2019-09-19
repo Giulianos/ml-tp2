@@ -7,6 +7,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/Giulianos/ml-decision-tree/randomforest"
+
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
@@ -30,6 +32,9 @@ func loadDataset(filename string) ([]classifier.Example, error) {
 }
 
 func main() {
+	// Log to stderr
+	log.SetOutput(os.Stderr)
+
 	// Read flags
 	trainFilename := flag.String("train", "", "input training set filename (required)")
 	testFilename := flag.String("test", "", "input test set filename (required)")
@@ -55,25 +60,19 @@ func main() {
 	}
 
 	// Create classifier
-	classif := decisiontree.NewDecisionTree(*predictableAttr)
-	/*
-		Configure classifier
-		classif.SetGainFunction(decisiontree.SHANNON_ENTROPY)
-		classif.SetMinSplitCount(10)
-	*/
+	classif := randomforest.New(*predictableAttr, 10, 1212)
+	classif.SetGainFunction(decisiontree.GINI)
+	classif.SetMinSplitCount(int(float64(len(training)) * 0.1))
+
 	// Train classifier
 	err = classif.Fit(training)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Print tree
-	fmt.Println("Using the following tree")
-	fmt.Println(classif)
-
 	// Run evaluation
 	eval := classifier.EvalClassifier(classif, test)
 
 	// Print confusion matrix
-	fmt.Println(eval.ConfusionMatrixToString())
+	fmt.Print(eval.ConfusionMatrixToString())
 }
