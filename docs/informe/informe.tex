@@ -7,6 +7,7 @@
 \usepackage{color}
 \usepackage{listings}
 \usepackage{subcaption}
+\usepackage{booktabs}
 \usepackage[table,xcdraw]{xcolor}
 
 \usepackage{array}
@@ -32,6 +33,7 @@
 \renewcommand{\tablename}{Tabla}
 
 \newcommand{\bold}[1]{\textbf{\texttt{#1}}}
+\newcommand{\italic}[1]{\textit{\texttt{#1}}}
 
 \title{TP 2: Algoritmos de Clasificación Supervisada}
 \author{Giuliano Scaglioni}
@@ -119,5 +121,64 @@ Como se puede observar en la Tabla \ref{tab:dataset-2}, en caso de que el atribu
   \caption{Conjunto de datos con el ejemplo agregado}
   \label{tab:dataset-2}
   \end{table}
-    
+
+\newpage
+\section{Titanic}
+
+\subsection{Acondicionamiento del dataset}
+El conjunto de datos fue modificado eliminando los atributos no relevantes para la clasificación de pasajeros, como el ID del pasajero, el numero de ticket, etc. Además, los atributos edad y tarifa, fueron discretizados.
+
+El dataset final utilizado se encuentra dentro de la carpeta \italic{datasets} en el repositorio de código bajo el nombre \italic{titanic-discretized.csv}. 
+
+\subsection{Conjuntos de prueba y entrenamiento}
+Para obtener los conjuntos de prueba y entrenamiento, se implementó un programa que permite dividir un dataset aleatoriamente indicando el porcentaje de test que se requiere. Este programa esta bajo el nombre \italic{cmd/splitset} en el repositorio de código.
+
+Para determinar el porcentaje de test a utilizar, se realizaron 5 divisiones aleatorias distintas para test sets de 20\%, 25\%, 30\% y 35\% del conjunto de datos total. Para cada porcentaje se obtuvo la varianza y el promedio de la precisión obtenida a partir de la evaluacion de los distintos clasificadores con cada training/test set. En la Tabla \ref{tab:testset-summary} se sumarizan los resultados obtenidos.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}cllllllll@{}}
+  \toprule
+  \multicolumn{1}{l}{}       & \multicolumn{2}{l}{Entropía de Shannon} & \multicolumn{2}{l}{Índice de Gini} & \multicolumn{2}{l}{R. Forest - Shannon} & \multicolumn{2}{l}{R. Forest - Gini} \\ \midrule
+  \multicolumn{1}{l}{Tamaño} & Varianza           & Promedio           & Varianza         & Promedio        & Varianza           & Promedio           & Varianza          & Promedio         \\
+  20\%                       & 0.080              & 0.800              & 0.062            & 0.820           & 0.062              & 0.820              & 0.062             & 0.820            \\
+  25\%                       & 0.024              & 0.839              & 0.024            & 0.839           & 0.024              & 0.839              & 0.024             & 0.839            \\
+  30\%                       & 0.014              & 0.701              & 0.014            & 0.701           & 0.014              & 0.701              & 0.014             & 0.701            \\
+  35\%                       & 0.006              & 0.596              & 0.014            & 0.640           & 0.008              & 0.610              & 0.014             & 0.640            \\ \bottomrule
+  \end{tabular}
+  \caption{Valores de varianza y promedio de la precisión en funcion del tamaño del conjunto de prueba}
+  \label{tab:testset-summary}
+  \end{table}
+
+  \begin{figure}[ht]
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/test-set-shannon.png}
+      \caption{Entropía de Shannon}
+      \label{fig21:sfig1}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/test-set-gini.png}
+      \caption{Índice de Gini}
+      \label{fig21:sfig2}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/test-set-rf-shannon.png}
+      \caption{Random Forest con Entropía de Shannon}
+      \label{fig21:sfig3}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/test-set-rf-gini.png}
+      \caption{Random Forest con Índice de Gini}
+      \label{fig21:sfig4}
+    \end{subfigure}
+    \caption{Gráficos de la varianza y promedio de la precisión en funcion del tamaño del test set}
+    \label{fig21:fig}
+  \end{figure}
+
+  Como se puede observar en la Fig. \ref{fig21:fig}, 25\% de test set es el valor que provee una varianza en los resultados reducida sin comprometer la precisión obtenida. Por esta razón, la división a utilizar en los próximos ejercicios es de 75\% para training y 25\% para test.
+
 \end{document}
