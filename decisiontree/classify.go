@@ -19,6 +19,13 @@ func recClassify(node Node, example classifier.Example) string {
 		log.Fatal("malformed tree")
 	}
 
+	// Here we know that node is an attr node (the cast is safe)
+	attrNode, ok := node.(AttrNode)
+	if !ok {
+		// Something really bad happened
+		log.Fatal("malformed tree")
+	}
+
 	var nextNode *Node
 	for _, child := range node.Children() {
 		if example[node.Tag()] == child.Tag() {
@@ -27,8 +34,7 @@ func recClassify(node Node, example classifier.Example) string {
 	}
 
 	if nextNode == nil {
-		log.Print("couldn't classify example")
-		return ""
+		return attrNode.GetMode()
 	}
 
 	return recClassify(*nextNode, example)

@@ -5,11 +5,12 @@ import "fmt"
 type ClassNode struct {
 	class string
 	id    uint64
-	depth int
+	depth *int
 }
 
 func NewClassNode(class string) ClassNode {
-	return ClassNode{class: class, id: generateId()}
+	var depth int
+	return ClassNode{class: class, id: generateId(), depth: &depth}
 }
 
 func (n ClassNode) Type() NodeType {
@@ -41,5 +42,9 @@ func (n ClassNode) AddChild(child Node) error {
 }
 
 func (n ClassNode) Depth() int {
-	return n.depth
+	return *n.depth
+}
+
+func (n ClassNode) SetDepth(depth int) {
+	*n.depth = depth
 }

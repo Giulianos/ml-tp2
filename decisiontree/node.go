@@ -49,4 +49,5 @@ type Node interface {
 	DotString() string
 	AddChild(child Node) error
 	Depth() int
+	SetDepth(depth int)
 }

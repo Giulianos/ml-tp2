@@ -2,19 +2,22 @@ package decisiontree
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
 )
 
 type DecisionTree struct {
-	predAttr     string
-	domain       map[string]map[string]string
-	tree         Node
-	Built        bool
-	nodeCount    int
-	maxSplits    int
-	splitsCount  int
-	gainFunction GainFunction
+	predAttr      string
+	domain        map[string]map[string]string
+	tree          Node
+	Built         bool
+	nodeCount     int
+	maxSplits     int
+	maxDepth      int
+	minSplitCount int
+	splitsCount   int
+	gainFunction  GainFunction
 }
 
 type GainFunction uint16
@@ -49,7 +52,9 @@ func (dt *DecisionTree) Fit(examples []classifier.Example) error {
 func NewDecisionTree(predictedAttribute string) DecisionTree {
 	ret := DecisionTree{predAttr: predictedAttribute}
 	ret.domain = make(map[string]map[string]string)
-	ret.maxSplits = -1
+	ret.maxSplits = math.MaxInt64
+	ret.maxDepth = math.MaxInt64
+	ret.minSplitCount = 1
 
 	return ret
 }
@@ -62,6 +67,10 @@ func (dt *DecisionTree) SetGainFunction(function GainFunction) {
 	dt.gainFunction = function
 }
 
+func (dt *DecisionTree) SetMinSplitCount(count int) {
+	dt.minSplitCount = count
+}
+
 func (dt DecisionTree) GetClasses() []string {
 	classes := make([]string, len(dt.domain[dt.predAttr]))
 	var idx int
@@ -71,6 +80,10 @@ func (dt DecisionTree) GetClasses() []string {
 	}
 
 	return classes
+}
+
+func (dt DecisionTree) GetPredictableAttribute() string {
+	return dt.predAttr
 }
 
 func (dt DecisionTree) String() string {

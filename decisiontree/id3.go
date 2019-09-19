@@ -9,6 +9,8 @@ import (
 
 func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {
 
+	log.Printf("Size: %d\n", len(examples))
+
 	sameClass := dt.isDataPure(examples)
 
 	// All examples are classified with the same class
@@ -17,15 +19,18 @@ func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {
 		return NewClassNode(*sameClass), nil
 	}
 
+	// Calculate mode class
+	modeClass := dt.modeClass(examples)
+
 	// Cannot split further put mode class
-	if dt.splitsCount == dt.maxSplits {
-		modeClass := dt.modeClass(examples)
+	if dt.splitsCount == dt.maxSplits || len(examples) < dt.minSplitCount || dt.equalExamples(examples) {
 		return NewClassNode(*modeClass), nil
 	}
 
 	// Otherwise find discriminant attribute and build the node
 	discrAttr := dt.discriminantAttribute(examples)
 	attrNode := NewAttrNode(*discrAttr)
+	attrNode.SetMode(*modeClass)
 	dt.nodeCount++
 	dt.splitsCount++
 
@@ -111,7 +116,6 @@ func (dt DecisionTree) discriminantAttribute(examples []classifier.Example) *str
 		}
 		if dt.gainFunction == GINI {
 			attrGini := dt.giniIndex(examples, attr)
-			log.Printf("Gini(%s)=%f", attr, attrGini)
 			if attrGini < discrAttrGain {
 				discrAttr = attr
 				discrAttrGain = attrGini
@@ -133,6 +137,22 @@ func (dt DecisionTree) isDataPure(examples []classifier.Example) *string {
 	}
 
 	return &currentClass
+}
+
+func (dt DecisionTree) equalExamples(examples []classifier.Example) bool {
+	if len(examples) == 0 {
+		return true // vacuous truth
+	}
+	first := examples[0]
+	for _, example := range examples {
+		for attr, val := range example {
+			if attr != dt.predAttr && first[attr] != val {
+				return false
+			}
+		}
+	}
+
+	return true
 }
 
 func (dt DecisionTree) modeClass(examples []classifier.Example) *string {

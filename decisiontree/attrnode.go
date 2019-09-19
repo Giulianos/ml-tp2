@@ -6,12 +6,14 @@ type AttrNode struct {
 	attr     string
 	children *[]Node
 	id       uint64
-	depth    int
+	depth    *int
+	mode     string
 }
 
 func NewAttrNode(attr string) AttrNode {
 	var childrenSlice []Node
-	return AttrNode{attr: attr, id: generateId(), children: &childrenSlice}
+	var depth int
+	return AttrNode{attr: attr, id: generateId(), children: &childrenSlice, depth: &depth}
 }
 
 func (n AttrNode) Type() NodeType {
@@ -35,7 +37,7 @@ func (n AttrNode) Id() uint64 {
 }
 
 func (n AttrNode) Depth() int {
-	return n.depth
+	return *n.depth
 }
 
 func (n AttrNode) DotString() string {
@@ -52,4 +54,16 @@ func (n AttrNode) AddChild(child Node) error {
 	*n.children = append(*n.children, child)
 
 	return nil
+}
+
+func (n AttrNode) SetDepth(depth int) {
+	*n.depth = depth
+}
+
+func (n *AttrNode) SetMode(mode string) {
+	n.mode = mode
+}
+
+func (n AttrNode) GetMode() string {
+	return n.mode
 }

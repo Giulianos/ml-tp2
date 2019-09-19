@@ -97,13 +97,13 @@ func (m *Metrics) computeFPRate() {
 
 // EvalClassifier evaluates a classifier with the provided test set
 // the classifier is assumed to be already trained
-func EvalClassifier(classifier Classifier, testExamples []Example, testClassification []string) Metrics {
+func EvalClassifier(classifier Classifier, testExamples []Example) Metrics {
 	metrics := Metrics{}
 	metrics.classes = classifier.GetClasses()
 	metrics.ConfusionMatrix = createConfusionMatrix(metrics.classes)
 
-	for index, example := range testExamples {
-		actual := testClassification[index]
+	for _, example := range testExamples {
+		actual := example[classifier.GetPredictableAttribute()]
 		got, _ := classifier.Classify(example)
 
 		// Add result to confusion matrix

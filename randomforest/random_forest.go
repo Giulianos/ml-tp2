@@ -55,3 +55,7 @@ func (b *RandomForest) saveClasses(examples []classifier.Example) {
 func (b RandomForest) GetClasses() []string {
 	return b.classes
 }
+
+func (b RandomForest) GetPredictableAttribute() string {
+	return b.predAttr
+}

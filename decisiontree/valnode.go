@@ -6,12 +6,13 @@ type ValNode struct {
 	val      string
 	children *[]Node
 	id       uint64
-	depth    int
+	depth    *int
 }
 
 func NewValNode(val string) ValNode {
 	var childrenSlice []Node
-	return ValNode{val: val, id: generateId(), children: &childrenSlice}
+	var depth int
+	return ValNode{val: val, id: generateId(), children: &childrenSlice, depth: &depth}
 }
 
 func (n ValNode) Type() NodeType {
@@ -35,7 +36,7 @@ func (n ValNode) Id() uint64 {
 }
 
 func (n ValNode) Depth() int {
-	return n.depth
+	return *n.depth
 }
 
 func (n ValNode) DotString() string {
@@ -52,4 +53,8 @@ func (n ValNode) AddChild(child Node) error {
 	*n.children = append(*n.children, child)
 
 	return nil
+}
+
+func (n ValNode) SetDepth(depth int) {
+	*n.depth = depth
 }
