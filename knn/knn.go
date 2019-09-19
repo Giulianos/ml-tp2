@@ -7,12 +7,21 @@ type distanceFunc func(ex1, ex2 classifier.Example) float64
 type KNN struct {
 	predAttr string
 	distance distanceFunc
+	examples []classifier.Example
 }
 
 func New(predAttr string, distance distanceFunc) KNN {
 	return KNN{
 		distance: distance,
 		predAttr: predAttr,
+	}
+}
+
+func (k *KNN) Fit(examples []classifier.Example) {
+	k.examples = make([]classifier.Example, len(examples))
+
+	for idx, example := range examples {
+		k.examples[idx] = example
 	}
 }
 
