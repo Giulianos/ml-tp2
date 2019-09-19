@@ -50,6 +50,7 @@ func main() {
 	trainFilename := flag.String("train", "train.csv", "output filename for train set")
 	testFilename := flag.String("test", "test.csv", "output filename for test set")
 	customSeed := flag.Int64("seed", 1207, "custom seed for random split")
+	testSize := flag.Float64("test-size", 0.1, "percentage of examples for testing [0, 1]")
 	flag.Parse()
 
 	// Set seed
@@ -76,7 +77,7 @@ func main() {
 	}
 
 	// Split set in training and test
-	training, test := randomSplit(examples, 0.1)
+	training, test := randomSplit(examples, *testSize)
 
 	// Save files
 	err = writeSet(training, *trainFilename)
