@@ -53,6 +53,8 @@
   \subsubsection{Entidades}
     En la implementación se definieron las siguientes entidades
     \begin{itemize}
+      \item \bold{Classifier}: es una abstracción de un clasificador. Define una interfaz que permite clasificar un ejemplo. Cada clasificador implementado en el trabajo práctico, implementa esta interfaz.
+      \item \bold{Metric}: es un tipo que almacena metricas de evaluación de un clasificador. Además provee metodos para evaluar un clasificador independientemente de su implementación.
       \item \bold{Example}: representa un ejemplo, su implementación es un mapa donde cada entrada tiene como clave el nombre del atributo y como valor, el valor que tiene ese atributo en el ejemplo.
       \item \bold{DecisionTree}: representa un árbol de decisión, para crear uno, se pasa una lista de ejemplos y el nombre del atributo a predecir. La implementación interna de esta entidad utiliza el algoritmo ID3 para crearlo. En la creación de un árbol de decisión, a su vez, se utilizan otras entidades, estas son:
       \begin{itemize}
@@ -66,18 +68,19 @@
     El programa implementado construye el árbol a partir de una lista de examples y el atributo a predecir, y genera como salida el árbol en formato Graphviz dot. 
 
     Además se provee una utilidad implementada en Vue.js que permite crear el árbol a partir de un archivo csv y visualizar el árbol de decisión desde el navegador utilizando como backend el programa implementado.
-  
 \subsection{Árboles de decisión}
 Se utilizó el programa descripto anteriormente para construír el árbol de decisión para el conjunto de datos provisto.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[scale=0.3]{img/tree1.png}
+    \includegraphics[scale=0.2]{img/tree1.png}
   \caption{Árbol de decisión construído.}
   \label{ej1-tree1}
 \end{figure}
 
-Como se puede observar en la Fig. \ref{ej1-tree1}, el único atributo relevante para determinar si la persona disfruta de deportes en el río es el cielo. Si se compara con los datos de la Tabla \ref{tab:dataset-1}, se puede ver que coincide en que para determinar si disfruta, el atributo cielo tiene que tener el valor sol.
+Como se puede observar en la Fig. \ref{ej1-tree1}, los únicos atributos relevantes para determinar si la persona disfruta de deportes en el río son el cielo y la temperatura. En la implementación del algoritmo \bold{ID3} se decidió que, en casos de empte, se conserve el primer atributo evaluado, en este caso, cielo.
+
+Si se compara con los datos de la Tabla \ref{tab:dataset-1}, se puede ver que coincide en que, para determinar si disfruta, el atributo cielo tiene que tener el valor sol.
 
 \begin{table}[h]
   \centering
@@ -96,7 +99,7 @@ Al agregar el nuevo ejemplo indicado se obtuvo el árbol de decisión de la Figu
 
 \begin{figure}[h]
   \centering
-    \includegraphics[scale=0.46]{img/tree2.png}
+    \includegraphics[scale=0.4]{img/tree2.png}
   \caption{Árbol de decisión construído.}
   \label{ej1-tree2}
 \end{figure}
