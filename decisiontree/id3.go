@@ -9,7 +9,9 @@ import (
 
 func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {
 
-	log.Printf("Size: %d\n", len(examples))
+	if len(examples) == 18 {
+		log.Printf("Size: %d\n", len(examples))
+	}
 
 	sameClass := dt.isDataPure(examples)
 
@@ -97,10 +99,10 @@ func (dt DecisionTree) splitData(examples []classifier.Example, attr string) map
 
 func (dt DecisionTree) discriminantAttribute(examples []classifier.Example) *string {
 	var discrAttr string
-	var discrAttrGain float64
+	var discrAttrGain = math.Inf(-1)
 
 	if dt.gainFunction == GINI {
-		discrAttrGain = math.MaxFloat64
+		discrAttrGain = math.Inf(1)
 	}
 
 	for attr := range dt.domain {
