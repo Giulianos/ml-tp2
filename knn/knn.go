@@ -2,6 +2,7 @@ package knn
 
 import (
 	"container/heap"
+	"math"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
 	"github.com/Giulianos/ml-decision-tree/knn/neighborheap"
@@ -14,6 +15,7 @@ type KNN struct {
 	distance distanceFunc
 	examples []classifier.Example
 	k        int
+	weighted bool
 }
 
 func New(k int, predAttr string, distance distanceFunc) KNN {
@@ -22,6 +24,10 @@ func New(k int, predAttr string, distance distanceFunc) KNN {
 		predAttr: predAttr,
 		k:        k,
 	}
+}
+
+func (knn *KNN) SetWeighted(value bool) {
+	knn.weighted = value
 }
 
 func (knn *KNN) Fit(examples []classifier.Example) {
@@ -33,9 +39,9 @@ func (knn KNN) getKNearest(example classifier.Example) neighborheap.NeighborHeap
 	nearest := &neighborheap.NeighborHeap{}
 	heap.Init(nearest)
 
-	for _, neighbor := range knn.examples {
+	for i, neighbor := range knn.examples {
 		dist := knn.distance(example, neighbor)
-		heap.Push(nearest, neighborheap.Neighbor{Neighbor: &neighbor, Distance: dist})
+		heap.Push(nearest, neighborheap.Neighbor{Neighbor: &knn.examples[i], Distance: dist})
 
 		// Check if we have to delete the excess
 		if nearest.Len() > knn.k {
@@ -47,8 +53,33 @@ func (knn KNN) getKNearest(example classifier.Example) neighborheap.NeighborHeap
 }
 
 func (knn KNN) Classify(example classifier.Example) (string, float64) {
-	// TODO: implement method
-	return "", 1.0
+	contrib := map[string]float64{}
+
+	nearest := knn.getKNearest(example)
+
+	for _, neigh := range nearest {
+		if neigh.Distance == 0 {
+			return (*neigh.Neighbor)[knn.predAttr], 1.0
+		}
+		var weight float64 = 1
+		if knn.weighted {
+			weight *= 1 / math.Pow(neigh.Distance, 2)
+		}
+		contrib[(*neigh.Neighbor)[knn.predAttr]] += weight
+	}
+
+	// Find the mode in the contrib map
+	var maxClass string
+	var maxContrib float64
+
+	for class, val := range contrib {
+		if val > maxContrib {
+			maxClass = class
+			maxContrib = val
+		}
+	}
+
+	return maxClass, 1.0
 }
 
 func (knn KNN) GetClasses() []string {
