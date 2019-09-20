@@ -83,3 +83,13 @@ func (b RandomForest) GetClasses() []string {
 func (b RandomForest) GetPredictableAttribute() string {
 	return b.predAttr
 }
+
+func (rf RandomForest) GetAvgNodeCount() float64 {
+	var nodeCount float64
+
+	for _, dt := range rf.classifiers {
+		nodeCount += float64(dt.GetNodeCount())
+	}
+
+	return nodeCount / float64(len(rf.classifiers))
+}
