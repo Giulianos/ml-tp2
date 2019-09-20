@@ -25,40 +25,46 @@ var testExamples = []classifier.Example{
 }
 
 func TestEntropy(t *testing.T) {
-	dt, err := NewDecisionTree(testExamples, "juega")
+	dt := NewDecisionTree("juega")
+
+	err := dt.Fit(testExamples)
 
 	if err != nil {
-		t.Errorf("Error running test: %e", err)
+		t.Errorf("error fitting: %e", err)
 	}
 
 	expectedEntropy := -(9./14.)*math.Log2(9./14.) - (5./14.)*math.Log2(5./14.)
 	actualEntropy := dt.sEntropy(testExamples)
 
 	if math.Abs(expectedEntropy-actualEntropy) > 0.0001 {
-		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
+		t.Errorf("expected: %f, got: %f", expectedEntropy, actualEntropy)
 	}
 }
 
 func TestSVEntropy(t *testing.T) {
-	dt, err := NewDecisionTree(testExamples, "juega")
+	dt := NewDecisionTree("juega")
+
+	err := dt.Fit(testExamples)
 
 	if err != nil {
-		t.Errorf("Error running test: %e", err)
+		t.Errorf("error fitting: %e", err)
 	}
 
 	expectedEntropy := -(6./8.)*math.Log2(6./8.) - (2./8.)*math.Log2(2./8.)
 	actualEntropy, _ := dt.svEntropy(testExamples, "viento", "debil")
 
 	if math.Abs(expectedEntropy-actualEntropy) > 0.0001 {
-		t.Errorf("Expected: %f, got: %f", expectedEntropy, actualEntropy)
+		t.Errorf("expected: %f, got: %f", expectedEntropy, actualEntropy)
 	}
 }
 
 func TestGain(t *testing.T) {
-	dt, err := NewDecisionTree(testExamples, "juega")
+	dt := NewDecisionTree("juega")
+
+	err := dt.Fit(testExamples)
 
 	if err != nil {
-		t.Errorf("Error running test: %e", err)
+		t.Errorf("error fitting: %e", err)
 	}
 
 	// Expected discriminant attribute
