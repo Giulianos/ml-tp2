@@ -50,38 +50,38 @@ func (rf *RandomForest) SetMinSplitCount(count int) {
 	}
 }
 
-func (b *RandomForest) Fit(examples []classifier.Example) error {
-	for i := 0; i < b.quantity; i++ {
-		err := b.classifiers[i].Fit(examples)
+func (rf *RandomForest) Fit(examples []classifier.Example) error {
+	for i := 0; i < rf.quantity; i++ {
+		err := rf.classifiers[i].Fit(examples)
 		if err != nil {
 			return err
 		}
 	}
 
-	b.saveClasses(examples)
+	rf.saveClasses(examples)
 
 	return nil
 }
 
-func (b *RandomForest) saveClasses(examples []classifier.Example) {
+func (rf *RandomForest) saveClasses(examples []classifier.Example) {
 	classesSet := make(map[string]int)
 	for _, example := range examples {
-		class := example[b.predAttr]
+		class := example[rf.predAttr]
 		classesSet[class]++
 	}
 
-	b.classes = make([]string, len(classesSet))
+	rf.classes = make([]string, len(classesSet))
 	for class := range classesSet {
-		b.classes = append(b.classes, class)
+		rf.classes = append(rf.classes, class)
 	}
 }
 
-func (b RandomForest) GetClasses() []string {
-	return b.classes
+func (rf RandomForest) GetClasses() []string {
+	return rf.classes
 }
 
-func (b RandomForest) GetPredictableAttribute() string {
-	return b.predAttr
+func (rf RandomForest) GetPredictableAttribute() string {
+	return rf.predAttr
 }
 
 func (rf RandomForest) GetAvgNodeCount() float64 {

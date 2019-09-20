@@ -5,8 +5,8 @@ import (
 	"github.com/Giulianos/ml-decision-tree/decisiontree"
 )
 
-func (b RandomForest) buildDTree(examples []classifier.Example) (decisiontree.DecisionTree, error) {
-	tree := decisiontree.NewDecisionTree(b.predAttr)
+func (rf RandomForest) buildDTree(examples []classifier.Example) (decisiontree.DecisionTree, error) {
+	tree := decisiontree.NewDecisionTree(rf.predAttr)
 	// TODO: setup any classifier properties here
 	// ex.: tree.SetMaxSplits(1)
 	err := tree.Fit(examples)
