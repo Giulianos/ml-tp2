@@ -71,6 +71,10 @@ func (dt *DecisionTree) SetMinSplitCount(count int) {
 	dt.minSplitCount = count
 }
 
+func (dt DecisionTree) GetNodeCount() int {
+	return dt.nodeCount
+}
+
 func (dt DecisionTree) GetClasses() []string {
 	classes := make([]string, len(dt.domain[dt.predAttr]))
 	var idx int
