@@ -83,8 +83,19 @@ func (knn KNN) Classify(example classifier.Example) (string, float64) {
 }
 
 func (knn KNN) GetClasses() []string {
-	// TODO: implement method
-	return []string{}
+	classes := map[string]bool{}
+
+	for _, example := range knn.examples {
+		classes[example[knn.predAttr]] = true
+	}
+
+	classesSlice := []string{}
+
+	for class := range classes {
+		classesSlice = append(classesSlice, class)
+	}
+
+	return classesSlice
 }
 
 func (knn KNN) GetPredictableAttribute() string {
