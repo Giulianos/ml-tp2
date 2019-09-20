@@ -6,7 +6,7 @@ func (rf RandomForest) getBootstrapSample(examples []classifier.Example) []class
 	sample := make([]classifier.Example, len(examples))
 
 	for i := range sample {
-		randIdx := rf.rng.Uint64()
+		randIdx := rf.rng.Intn(len(examples))
 		sample[i] = examples[randIdx]
 	}
 

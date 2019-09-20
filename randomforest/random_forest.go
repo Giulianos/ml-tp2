@@ -52,7 +52,7 @@ func (rf *RandomForest) SetMinSplitCount(count int) {
 
 func (rf *RandomForest) Fit(examples []classifier.Example) error {
 	for i := 0; i < rf.quantity; i++ {
-		err := rf.classifiers[i].Fit(examples)
+		err := rf.classifiers[i].Fit(rf.getBootstrapSample(examples))
 		if err != nil {
 			return err
 		}
