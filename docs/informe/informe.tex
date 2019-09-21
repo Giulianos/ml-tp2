@@ -83,7 +83,7 @@ Se utilizó el programa descripto anteriormente para construír el árbol de dec
   \label{ej1-tree1}
 \end{figure}
 
-Como se puede observar en la \reffig{ej1-tree1}, el único atributo relevante para determinar si la persona disfruta de deportes en el río es el cielo. Si se observa la table, se puede ver que ademas del cielo, tambien la temperatura determina si disfruta o no. En la implementación del algoritmo \bold{ID3} se decidió que, en casos de empte, se conserve el primer atributo evaluado, en este caso, cielo.
+Como se puede observar en la \reffig{ej1-tree1}, el único atributo relevante para determinar si la persona disfruta de deportes en el río es el cielo. Si se observa la \reftable{tab:dataset-1}, se puede ver que ademas del cielo, tambien la temperatura determina si disfruta o no. En la implementación del algoritmo \bold{ID3} se decidió que, en casos de empte, se conserve el primer atributo evaluado, en este caso, cielo.
 
 Si se compara con los datos de la \reftable{tab:dataset-1}, se puede ver que coincide en que, para determinar si disfruta, el atributo cielo tiene que tener el valor sol.
 
@@ -254,7 +254,7 @@ Como se puede observar en la \reffig{fig:ej3-scatter-training}, la dimension Wor
 Por la razones explicadas, se decidio dar mayor relevancia a Sentiment Value, luego a Title Sentiment y por ultimo a Word Count, proponiendo la funcion distancia siguiente:
 
 \begin{equation}
-  d(\vec{x},\vec{y}) = \left \|(\vec{x}-\vec{y})\begin{pmatrix}
+  d(\vec{x},\vec{y}) = \left \|(\vec{y}-\vec{x})\begin{pmatrix}
     1 & 0 & 0\\ 
     0 & 2 & 0\\ 
     0 & 0 & 3
@@ -262,5 +262,56 @@ Por la razones explicadas, se decidio dar mayor relevancia a Sentiment Value, lu
 \end{equation}
 
 Donde $\vec{x}$ e $\vec{y}$ son ejemplos cuya primer componente es el Word Count, la segunda el Title Sentiment y la tercera el Sentiment Value.
+
+\subsection{Matriz de confusion}
+
+Se realizaron 4 evaluaciones distintas con los mismos conjuntos de entrenamiento y prueba.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/cm-eul.png}
+    \caption{KNN sin pesos con distancia euleriana}
+    \label{sent-cm:sfig1}
+  \end{subfigure}%
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/cm-cust.png}
+    \caption{KNN pesado con distancia euleriana}
+    \label{sent-cm:sfig2}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/cm-weul.png}
+    \caption{KNN sin pesos con distancia propuesta}
+    \label{sent-cm:sfig3}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/cm-wcust.png}
+    \caption{KNN pesado con distancia propuesta}
+    \label{sent-cm:sfig4}
+  \end{subfigure}
+  \caption{Matrices de confusion de cada evaluacion}
+  \label{sent-cm:fig}
+\end{figure}
+
+Como se puede observar en la \reffig{sent-cm:fig}, pesar las distancias aporta un incremento en la cantidad de aciertos (suma de los elementos de la diagonal). Por otro lado, tambien se puede ver que la distancia propuesta tambien aumenta la cantidad de aciertos en comparacion con la euleriana, siendo esta mayor al incremento ganado por utilizar pesos en las contribuciones de cada vecino.
+
+\subsection{Metricas}
+A partir de las matrices de confusion de la \reffig{sent-cm:fig} se obtuvieron las metricas de rendimiento de los clasificadores. En la \reftable{tab:sent-prec} se presentan los resultados de la precision de cada clasificador evaluado. Como se puede observar, se hace mas evidente las mejoras comentadas en la seccion anterior.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}ccc@{}}
+    \toprule
+    \multicolumn{1}{l}{} & \textbf{Euler} & \textbf{Propuesta} \\ \midrule
+    \textbf{Sin pesos}   & 0.674          & 0.756              \\
+    \textbf{Con pesos}   & 0.684          & 0.806              \\ \bottomrule
+    \end{tabular}
+  \caption{Precision de cada clasificador}
+  \label{tab:sent-prec}
+  \end{table}
 
 \end{document}
