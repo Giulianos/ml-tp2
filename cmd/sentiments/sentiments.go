@@ -48,11 +48,18 @@ func exampleToTuple(ex classifier.Example) (wordCount, titleSentiment, sentiment
 	return
 }
 
-func distance(ex1, ex2 classifier.Example) float64 {
+func euclideanDistance(ex1, ex2 classifier.Example) float64 {
 	wc1, ts1, sv1 := exampleToTuple(ex1)
 	wc2, ts2, sv2 := exampleToTuple(ex2)
 
 	return math.Sqrt(math.Pow(wc1-wc2, 2) + math.Pow(ts1-ts2, 2) + math.Pow(sv1-sv2, 2))
+}
+
+func customDistance(ex1, ex2 classifier.Example) float64 {
+	wc1, ts1, sv1 := exampleToTuple(ex1)
+	wc2, ts2, sv2 := exampleToTuple(ex2)
+
+	return math.Sqrt(math.Pow(wc1-wc2, 2) + math.Pow(2*(ts1-ts2), 2) + math.Pow(3*(sv1-sv2), 2))
 }
 
 func main() {
@@ -75,7 +82,7 @@ func main() {
 	}
 
 	// Create KNN classifier
-	classif := knn.New(5, "StarRating", distance)
+	classif := knn.New(5, "StarRating", customDistance)
 	classif.SetWeighted(*weighted)
 
 	// Fit classifier
