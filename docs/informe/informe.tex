@@ -150,35 +150,77 @@ Para determinar el porcentaje de test a utilizar, se realizaron 5 divisiones ale
   \label{tab:testset-summary}
   \end{table}
 
-  \begin{figure}[ht]
-    \begin{subfigure}{.5\textwidth}
+  \begin{figure}[h]
+    \centering
+    \begin{subfigure}{.4\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/test-set-shannon.png}
       \caption{Entropía de Shannon}
-      \label{fig21:sfig1}
+      \label{test-size:sfig1}
     \end{subfigure}%
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.4\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/test-set-gini.png}
       \caption{Índice de Gini}
-      \label{fig21:sfig2}
+      \label{test-size:sfig2}
     \end{subfigure}
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.4\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/test-set-rf-shannon.png}
       \caption{Random Forest con Entropía de Shannon}
-      \label{fig21:sfig3}
+      \label{test-size:sfig3}
     \end{subfigure}
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.4\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/test-set-rf-gini.png}
       \caption{Random Forest con Índice de Gini}
-      \label{fig21:sfig4}
+      \label{test-size:sfig4}
     \end{subfigure}
     \caption{Gráficos de la varianza y promedio de la precisión en funcion del tamaño del test set}
-    \label{fig21:fig}
+    \label{test-size:fig}
   \end{figure}
 
-  Como se puede observar en la Fig. \ref{fig21:fig}, 25\% de test set es el valor que provee una varianza en los resultados reducida sin comprometer la precisión obtenida. Por esta razón, la división a utilizar en los próximos ejercicios es de 75\% para training y 25\% para test.
+  Como se puede observar en la Fig. \ref{fig21:fig}, 25\% de test set es el valor que provee una varianza en los resultados reducida sin comprometer la precisión obtenida. Por esta razón, la división elegida para utilizar en los próximos ejercicios es de 75\% para training y 25\% para test.
+
+  \subsection{Matrices de confusion}
+  Para obtener las matrices de confusion, se dividieron los datos en un conjunto de prueba y otro de entrenamiento. Se entreno cada clasificador con el mismo conjunto de entrenamiento y se realizaron todas las evaluaciones con le mismo conjunto de prueba.
+  
+  En todos los casos se podo el arbol utilizando la condicion de que cada nodo raiz debia tener al menos el 10\% del tamano del conjunto de entrenamiento. Las evaluaciones del metodo Random Forest se realizaron con 10 arboles en cada clasificador.
+
+  Las matrices de confusion obtenidas para cada evaluacion se pueden ver en la Fig. \ref{titanic-cm:fig}.
+
+  \begin{figure}[h]
+    \centering
+    \begin{subfigure}{.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/cm-shannon.png}
+      \caption{Entropía de Shannon}
+      \label{titanic-cm:sfig1}
+    \end{subfigure}%
+    \begin{subfigure}{.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/cm-gini.png}
+      \caption{Índice de Gini}
+      \label{titanic-cm:sfig2}
+    \end{subfigure}
+    \begin{subfigure}{.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/cm-rf-shannon.png}
+      \caption{Random Forest con Entropía de Shannon}
+      \label{titanic-cm:sfig3}
+    \end{subfigure}
+    \begin{subfigure}{.4\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{img/cm-rf-gini.png}
+      \caption{Random Forest con Índice de Gini}
+      \label{titanic-cm:sfig4}
+    \end{subfigure}
+    \caption{Matrices de confusion de cada evaluacion}
+    \label{titanic-cm:fig}
+  \end{figure}
+
+\subsection{Precision vs. cantidad de nodos}
+
+\newpage
 
 \end{document}
