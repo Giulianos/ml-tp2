@@ -233,4 +233,34 @@ Se implemento un programa que calcula la cantidad de palabras promedio que tiene
 
 Al correrlo con el conjunto de datos provisto, el resultado es que los comentarios con una estrella tienen en promedio $12.22$ palabras.
 
+\subsection{Conjunto de entrenamiento}
+Se dividieron los datos en un conjunto de entrenamiento y otro de prueba con 70\% y 30\% de los datos respectivamente de forma aleatoria con el programa \bold{splitset} comentado en el ejercicio anterior.
+
+Se eliminaron los atributos que no eran numericos dejando solo \textit{wordCount}, \textit{sentimentValue} y \textit{titleSentiment} conviertiendo este ultimo a -1 para los negativos y 1 para los positivos.
+
+Luego se analizo el conjunto de entrenamiento para ver como se distribuian los ejemplos en el espacio, con el objetivo de proponer una funcion distancia efectiva.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[scale=0.5]{img/knn-training-set-scatter.png}
+  \caption{Grafico de dispersion de los ejemplos del conjunto de entrenamiento}
+  \label{fig:ej3-scatter-training}
+\end{figure}
+
+
+\subsection{Funcion distancia}
+Como se puede observar en la \reffig{fig:ej3-scatter-training}, la dimension WordCount no aporta una separacion significativa entre clases. Se puede ver que predominan algunos puntos naranjas (comentarios de dos estrellas) en la region donde mas palabras hay, pero la mayor parte de los puntos se encuentran en los valores bajos. Por otro lado, se distingue que Sentiment Value si separa los puntos entre clases de forma marcada entre las clases de 1, 3 y 5 estrellas. Finalmente, Title Sentiment aporta una separacion pero menos marcada, trayendo al plano TitleSentiment -1 mayor cantidad de puntos rojos.
+
+Por la razones explicadas, se decidio dar mayor relevancia a Sentiment Value, luego a Title Sentiment y por ultimo a Word Count, proponiendo la funcion distancia siguiente:
+
+\begin{equation}
+  d(\vec{x},\vec{y}) = \left \|(\vec{x}-\vec{y})\begin{pmatrix}
+    1 & 0 & 0\\ 
+    0 & 2 & 0\\ 
+    0 & 0 & 3
+    \end{pmatrix}\right \|
+\end{equation}
+
+Donde $\vec{x}$ e $\vec{y}$ son ejemplos cuya primer componente es el Word Count, la segunda el Title Sentiment y la tercera el Sentiment Value.
+
 \end{document}
