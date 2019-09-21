@@ -25,7 +25,7 @@ func New(predAttr string, quantity int, seed int64) RandomForest {
 	}
 
 	for i := 0; i < ret.quantity; i++ {
-		decTree := decisiontree.NewDecisionTree(predAttr)
+		decTree := decisiontree.New(predAttr)
 		ret.classifiers[i] = &decTree
 	}
 
@@ -47,6 +47,12 @@ func (rf *RandomForest) SetGainFunction(function decisiontree.GainFunction) {
 func (rf *RandomForest) SetMinSplitCount(count int) {
 	for _, decTree := range rf.classifiers {
 		decTree.SetMinSplitCount(count)
+	}
+}
+
+func (rf *RandomForest) SetMaxNodeCount(count int) {
+	for _, decTree := range rf.classifiers {
+		decTree.SetMaxNodeCount(count)
 	}
 }
 

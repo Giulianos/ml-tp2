@@ -25,7 +25,7 @@ func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {
 	modeClass := dt.modeClass(examples)
 
 	// Cannot split further put mode class
-	if dt.splitsCount == dt.maxSplits || len(examples) < dt.minSplitCount || dt.equalExamples(examples) {
+	if dt.splitsCount == dt.maxSplits || len(examples) < dt.minSplitCount || dt.nodeCount > dt.maxNodeCount || dt.equalExamples(examples) {
 		return NewClassNode(*modeClass), nil
 	}
 

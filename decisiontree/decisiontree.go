@@ -13,6 +13,7 @@ type DecisionTree struct {
 	tree          Node
 	Built         bool
 	nodeCount     int
+	maxNodeCount  int
 	maxSplits     int
 	maxDepth      int
 	minSplitCount int
@@ -49,12 +50,13 @@ func (dt *DecisionTree) Fit(examples []classifier.Example) error {
 	return err
 }
 
-func NewDecisionTree(predictedAttribute string) DecisionTree {
+func New(predictedAttribute string) DecisionTree {
 	ret := DecisionTree{predAttr: predictedAttribute}
 	ret.domain = make(map[string]map[string]string)
 	ret.maxSplits = math.MaxInt64
 	ret.maxDepth = math.MaxInt64
 	ret.minSplitCount = 1
+	ret.maxNodeCount = math.MaxInt64
 
 	return ret
 }
@@ -73,6 +75,10 @@ func (dt *DecisionTree) SetMinSplitCount(count int) {
 
 func (dt DecisionTree) GetNodeCount() int {
 	return dt.nodeCount
+}
+
+func (dt *DecisionTree) SetMaxNodeCount(count int) {
+	dt.maxNodeCount = count
 }
 
 func (dt DecisionTree) GetClasses() []string {
