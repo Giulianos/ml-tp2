@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     sendCSV () {
-      create(this.csvData, this.predAttr)
+      create(this.csvData, this.predAttr, this.gainFunc, this.minNodeCount)
     }
   },
   name: 'home',
