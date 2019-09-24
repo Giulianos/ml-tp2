@@ -224,7 +224,41 @@ Para determinar el porcentaje de test a utilizar, se realizaron 5 divisiones ale
 
 \subsection{Precisión vs. cantidad de nodos}
 
-\newpage
+Para obtener los gráficos de la \reffig{titanic-nodecount:fig} se entrenaron los 4 clasificadores con el mismo conjunto de training. Luego se realizaron las evaluaciones tanto con el conjunto de training como con el de prueba.
+
+Se puede observar que al aumentar la cantidad de nodos no hay overfitting. Una posible explicación para este hecho es que existe una probabilidad alta de que todos los ejemplos representativos esten en el conjunto de entrenamiento. Por esta razón, al evaluar con el conjunto de prueba, los resultados son similares. Por otro lado, el error presente se debe a todos los ejemplos repetidos que puedan ser tanto sobrevivientes como no, y que los clasificadores estan clasificando como el mas frecuente.
+
+La probabilidad alta de que los ejemplos del conjunto de entrenamiento sean todos los representativos se debe a que el tamaño del conjunto de entrenamiento es de aproximadamente 100 ejemplos, y en total, con la discretización propuesta, puede haber como máximo 12 ejemplos distintos. Esto se debe a que hay 3 valores posibles para \textbf{Pclass} y 2 para \textbf{Sex} y \textbf{Age}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/prec-shannon.png}
+    \caption{Entropía de Shannon}
+    \label{titanic-nodecount:sfig1}
+  \end{subfigure}%
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/prec-gini.png}
+    \caption{Índice de Gini}
+    \label{titanic-nodecount:sfig2}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/prec-rfshannon.png}
+    \caption{Random Forest con Entropía de Shannon}
+    \label{titanic-nodecount:sfig3}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/prec-rfgini.png}
+    \caption{Random Forest con Índice de Gini}
+    \label{titanic-nodecount:sfig4}
+  \end{subfigure}
+  \caption{Gráficos de la precisión en funcion de la cantidad de nodos}
+  \label{titanic-nodecount:fig}
+\end{figure}
 
 \section{Opiniones de usuarios}
 
