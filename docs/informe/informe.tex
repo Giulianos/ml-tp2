@@ -59,18 +59,18 @@
     En la implementación se definieron las siguientes entidades
     \begin{itemize}
       \item \bold{Classifier}: es una abstracción de un clasificador. Define una interfaz que permite clasificar un ejemplo. Cada clasificador implementado en el trabajo práctico, implementa esta interfaz.
-      \item \bold{Metric}: es un tipo que almacena metricas de evaluación de un clasificador. Además provee metodos para evaluar un clasificador independientemente de su implementación.
+      \item \bold{Metric}: es un tipo que almacena métricas de evaluación de un clasificador. Además provee métodos para evaluar un clasificador independientemente de su implementación.
       \item \bold{Example}: representa un ejemplo, su implementación es un mapa donde cada entrada tiene como clave el nombre del atributo y como valor, el valor que tiene ese atributo en el ejemplo.
-      \item \bold{DecisionTree}: representa un árbol de decisión, para crear uno, se pasa una lista de ejemplos y el nombre del atributo objetivo. La implementación interna de esta entidad utiliza el algoritmo ID3 para crearlo. En la creación de un árbol de decisión, a su vez, se utilizan otras entidades, estas son:
+      \item \bold{DecisionTree}: representa un árbol de decisión. Para crear uno, se pasa una lista de ejemplos y el nombre del atributo objetivo. La implementación interna de esta entidad utiliza el algoritmo ID3 para crearlo. En la creación de un árbol de decisión, a su vez, se utilizan otras entidades, estas son:
       \begin{itemize}
-        \item \bold{Node}: representa un nodo del arbol de decisión y define comportamiento para obtener el tipo de nodo, obtener la lista de hijos de este, agregar hijos, entre otros métodos necesarios para su representación.
+        \item \bold{Node}: representa un nodo del árbol de decisión y define comportamiento para obtener el tipo de nodo, obtener la lista de hijos de este, agregar hijos, entre otros métodos necesarios para su representación.
         \item \bold{AttrNode}: es una implementación de Node para los nodos que representan un atributo.
         \item \bold{ValNode}: es una implementación de Node para los nodos que representan los valores posibles de un atributo.
         \item \bold{ClassNode}: es una implementación de Node para los nodos que representan una clase. Esta implementación no permite agregar hijos pues este tipo de nodos siempre es hoja.
       \end{itemize}
     \end{itemize}
   \subsubsection{Visualización del árbol}
-    El programa implementado construye el árbol a partir de una lista de examples y el atributo a predecir, y genera como salida el árbol en formato Graphviz dot. 
+    El programa implementado construye el árbol a partir de una lista de examples y el atributo a predecir, y genera como salida el árbol en formato Graphviz dot.
 
     Además se provee una utilidad implementada en Vue.js que permite crear el árbol a partir de un archivo csv y visualizar el árbol de decisión desde el navegador utilizando como backend el programa implementado.
 \subsection{Árboles de decisión}
@@ -83,7 +83,7 @@ Se utilizó el programa descripto anteriormente para construír el árbol de dec
   \label{ej1-tree1}
 \end{figure}
 
-Como se puede observar en la \reffig{ej1-tree1}, el único atributo relevante para determinar si la persona disfruta de deportes en el río es el cielo. Si se observa la \reftable{tab:dataset-1}, se puede ver que ademas del cielo, tambien la temperatura determina si disfruta o no. En la implementación del algoritmo \bold{ID3} se decidió que, en casos de empte, se conserve el primer atributo evaluado, en este caso, cielo.
+Como se puede observar en la \reffig{ej1-tree1}, el único atributo relevante para determinar si la persona disfruta de deportes en el río es el cielo. Si se observa la \reftable{tab:dataset-1}, se puede ver que además del cielo, también la temperatura determina si disfruta o no. En la implementación del algoritmo \bold{ID3} se decidió que, en casos de empte, se conserve el primer atributo evaluado, en este caso, cielo.
 
 Si se compara con los datos de la \reftable{tab:dataset-1}, se puede ver que coincide en que, para determinar si disfruta, el atributo cielo tiene que tener el valor sol.
 
@@ -109,7 +109,7 @@ Al agregar el nuevo ejemplo indicado se obtuvo el árbol de decisión de la \ref
   \label{ej1-tree2}
 \end{figure}
 
-Como se puede observar en la \reftable{tab:dataset-2}, en caso de que el atributo cielo sea sol tambien se debe comprobar el valor del atributo viento para determinar si disfruta, lo cual coincide con el árbol de decisión obtenido.
+Como se puede observar en la \reftable{tab:dataset-2}, en caso de que el atributo cielo sea sol, tambien se debe comprobar el valor del atributo viento para determinar si disfruta, lo cual coincide con el árbol de decisión obtenido.
 
 \begin{table}[h]
   \centering
@@ -185,12 +185,12 @@ Para determinar el porcentaje de test a utilizar, se realizaron 5 divisiones ale
 
   Como se puede observar en la \reffig{test-size:fig}, 25\% de test set es el valor que provee una varianza en los resultados reducida sin comprometer la precisión obtenida. Por esta razón, la división elegida para utilizar en los próximos ejercicios es de 75\% para training y 25\% para test.
 
-  \subsection{Matrices de confusion}
-  Para obtener las matrices de confusion, se dividieron los datos en un conjunto de prueba y otro de entrenamiento. Se entreno cada clasificador con el mismo conjunto de entrenamiento y se realizaron todas las evaluaciones con le mismo conjunto de prueba.
+  \subsection{Matrices de confusión}
+  Para obtener las matrices de confusión, se dividieron los datos en un conjunto de prueba y otro de entrenamiento. Se entrenó cada clasificador con el mismo conjunto de entrenamiento y se realizaron todas las evaluaciones con le mismo conjunto de prueba.
   
-  En todos los casos se podo el arbol utilizando la condicion de que cada nodo raiz debia tener al menos el 10\% del tamano del conjunto de entrenamiento. Las evaluaciones del metodo Random Forest se realizaron con 10 arboles en cada clasificador.
+  En todos los casos se podó el árbol utilizando la condición de que cada nodo raiz debía tener al menos el 10\% del tamaño del conjunto de entrenamiento. Las evaluaciones del método Random Forest se realizaron con 10 árboles en cada clasificador.
 
-  Las matrices de confusion obtenidas para cada evaluacion se pueden ver en la \reffig{titanic-cm:fig}.
+  Las matrices de confusión obtenidas para cada evaluación se pueden ver en la \reffig{titanic-cm:fig}.
 
   \begin{figure}[h]
     \centering
@@ -218,40 +218,40 @@ Para determinar el porcentaje de test a utilizar, se realizaron 5 divisiones ale
       \caption{Random Forest con Índice de Gini}
       \label{titanic-cm:sfig4}
     \end{subfigure}
-    \caption{Matrices de confusion de cada evaluacion}
+    \caption{Matrices de confusión de cada evaluación}
     \label{titanic-cm:fig}
   \end{figure}
 
-\subsection{Precision vs. cantidad de nodos}
+\subsection{Precisión vs. cantidad de nodos}
 
 \newpage
 
 \section{Opiniones de usuarios}
 
 \subsection{Comentarios con una estrella}
-Se implemento un programa que calcula la cantidad de palabras promedio que tienen los comentarios de una estrella. El mismo puede encontrarse bajo \bold{cmd/reviewswordcount} en el repositorio de codigo.
+Se implementó un programa que calcula la cantidad de palabras promedio que tienen los comentarios de una estrella. El mismo puede encontrarse bajo \bold{cmd/reviewswordcount} en el repositorio de código.
 
 Al correrlo con el conjunto de datos provisto, el resultado es que los comentarios con una estrella tienen en promedio $12.22$ palabras.
 
 \subsection{Conjunto de entrenamiento}
 Se dividieron los datos en un conjunto de entrenamiento y otro de prueba con 70\% y 30\% de los datos respectivamente de forma aleatoria con el programa \bold{splitset} comentado en el ejercicio anterior.
 
-Se eliminaron los atributos que no eran numericos dejando solo \textit{wordCount}, \textit{sentimentValue} y \textit{titleSentiment} conviertiendo este ultimo a -1 para los negativos y 1 para los positivos.
+Se eliminaron los atributos que no eran numéricos, dejando solo \textit{wordCount}, \textit{sentimentValue} y \textit{titleSentiment}, conviertiendo este último a -1 para los negativos y 1 para los positivos.
 
-Luego se analizo el conjunto de entrenamiento para ver como se distribuian los ejemplos en el espacio, con el objetivo de proponer una funcion distancia efectiva.
+Luego se analizó el conjunto de entrenamiento para ver como se distribuían los ejemplos en el espacio, con el objetivo de proponer una función distancia efectiva.
 
 \begin{figure}[h]
   \centering
     \includegraphics[scale=0.5]{img/knn-training-set-scatter.png}
-  \caption{Grafico de dispersion de los ejemplos del conjunto de entrenamiento}
+  \caption{Gráfico de dispersión de los ejemplos del conjunto de entrenamiento}
   \label{fig:ej3-scatter-training}
 \end{figure}
 
 
-\subsection{Funcion distancia}
-Como se puede observar en la \reffig{fig:ej3-scatter-training}, la dimension WordCount no aporta una separacion significativa entre clases. Se puede ver que predominan algunos puntos naranjas (comentarios de dos estrellas) en la region donde mas palabras hay, pero la mayor parte de los puntos se encuentran en los valores bajos. Por otro lado, se distingue que Sentiment Value si separa los puntos entre clases de forma marcada entre las clases de 1, 3 y 5 estrellas. Finalmente, Title Sentiment aporta una separacion pero menos marcada, trayendo al plano TitleSentiment -1 mayor cantidad de puntos rojos.
+\subsection{Función distancia}
+Como se puede observar en la \reffig{fig:ej3-scatter-training}, la dimensión WordCount no aporta una separación significativa entre clases. Se puede ver que predominan algunos puntos naranjas (comentarios de dos estrellas) en la región donde mas palabras hay, pero la mayor parte de los puntos se encuentran en los valores bajos. Por otro lado, se distingue que Sentiment Value sí separa los puntos entre clases de forma marcada entre las clases de 1, 3 y 5 estrellas. Finalmente, Title Sentiment aporta una separación pero menos marcada, trayendo al plano $TitleSentiment = -1$, mayor cantidad de puntos rojos.
 
-Por la razones explicadas, se decidio dar mayor relevancia a Sentiment Value, luego a Title Sentiment y por ultimo a Word Count, proponiendo la funcion distancia siguiente:
+Por la razones explicadas, se decidió dar mayor relevancia a Sentiment Value, luego a Title Sentiment y por último a Word Count, proponiendo la función distancia siguiente:
 
 \begin{equation}
   d(\vec{x},\vec{y}) = \left \|(\vec{y}-\vec{x})\begin{pmatrix}
@@ -263,7 +263,7 @@ Por la razones explicadas, se decidio dar mayor relevancia a Sentiment Value, lu
 
 Donde $\vec{x}$ e $\vec{y}$ son ejemplos cuya primer componente es el Word Count, la segunda el Title Sentiment y la tercera el Sentiment Value.
 
-\subsection{Matriz de confusion}
+\subsection{Matriz de confusión}
 
 Se realizaron 4 evaluaciones distintas con los mismos conjuntos de entrenamiento y prueba.
 
@@ -293,14 +293,14 @@ Se realizaron 4 evaluaciones distintas con los mismos conjuntos de entrenamiento
     \caption{KNN pesado con distancia propuesta}
     \label{sent-cm:sfig4}
   \end{subfigure}
-  \caption{Matrices de confusion de cada evaluacion}
+  \caption{Matrices de confusión de cada evaluación}
   \label{sent-cm:fig}
 \end{figure}
 
 Como se puede observar en la \reffig{sent-cm:fig}, pesar las distancias aporta un incremento en la cantidad de aciertos (suma de los elementos de la diagonal). Por otro lado, tambien se puede ver que la distancia propuesta tambien aumenta la cantidad de aciertos en comparacion con la euleriana, siendo esta mayor al incremento ganado por utilizar pesos en las contribuciones de cada vecino.
 
 \subsection{Metricas}
-A partir de las matrices de confusion de la \reffig{sent-cm:fig} se obtuvieron las metricas de rendimiento de los clasificadores. En la \reftable{tab:sent-prec} se presentan los resultados de la precision de cada clasificador evaluado. Como se puede observar, se hace mas evidente las mejoras comentadas en la seccion anterior.
+A partir de las matrices de confusión de la \reffig{sent-cm:fig} se obtuvieron las metricas de rendimiento de los clasificadores. En la \reftable{tab:sent-prec} se presentan los resultados de la precision de cada clasificador evaluado. Como se puede observar, se hace mas evidente las mejoras comentadas en la sección anterior.
 
 \begin{table}[h]
   \centering
@@ -310,7 +310,7 @@ A partir de las matrices de confusion de la \reffig{sent-cm:fig} se obtuvieron l
     \textbf{Sin pesos}   & 0.674          & 0.756              \\
     \textbf{Con pesos}   & 0.684          & 0.806              \\ \bottomrule
     \end{tabular}
-  \caption{Precision de cada clasificador}
+  \caption{Precisión de cada clasificador}
   \label{tab:sent-prec}
   \end{table}
 
