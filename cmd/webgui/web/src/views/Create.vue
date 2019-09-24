@@ -2,7 +2,9 @@
 .create-view
   form.build(@submit.prevent='sendCSV')
     textarea.w100.mb-2(v-model='csvData' placeholder='Conjunto de datos en CSV')
-    input.w100.mb-1(v-model='predAttr' placeholder='Atributo a predecir')
+    select.w100.mb-1(v-model='predAttr' placeholder='Atributo a predecir')
+      option(v-for='attr in attributes' :value='attr')
+        | {{attr}}
     input.w100.mb-1(v-model='minNodeCount' placeholder='Mín. cant. de ejemplos por nodo')
     select.w100.mb-2(v-model='gainFunc' placeholder="Función de ganancia")
       option(select="selected" value="shannon")
@@ -30,6 +32,11 @@ export default {
   methods: {
     sendCSV () {
       create(this.csvData, this.predAttr, this.gainFunc, this.minNodeCount)
+    }
+  },
+  computed: {
+    attributes() {
+      return this.csvData.length ? this.csvData.split('\n')[0].split(',') : []
     }
   },
   name: 'home',
