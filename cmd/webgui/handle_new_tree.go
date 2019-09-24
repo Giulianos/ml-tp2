@@ -52,7 +52,7 @@ func HandleNewTree(dt *decisiontree.DecisionTree, dtMutex *sync.Mutex) http.Hand
 		log.Println(predAttr)
 
 		// Create tree
-		tree := decisiontree.NewDecisionTree(predAttr)
+		tree := decisiontree.New(predAttr)
 		tree.SetGainFunction(decisiontree.GINI)
 		tree.SetMaxSplits(3)
 		err = tree.Fit(examples)

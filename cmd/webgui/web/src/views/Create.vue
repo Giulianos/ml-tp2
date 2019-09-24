@@ -1,9 +1,15 @@
 <template lang="pug">
 .create-view
   form.build(@submit.prevent='sendCSV')
-    textarea.mb-1(v-model='csvData' placeholder='Insertar el dataset en CSV aca')
-    input.mb-1(v-model='predAttr' placeholder='Atributo a predecir')
-    button.mb-1
+    textarea.w100.mb-2(v-model='csvData' placeholder='Conjunto de datos en CSV')
+    input.w100.mb-1(v-model='predAttr' placeholder='Atributo a predecir')
+    input.w100.mb-1(v-model='minNodeCount' placeholder='Mín. cant. de ejemplos por nodo')
+    select.w100.mb-2(v-model='gainFunc' placeholder="Función de ganancia")
+      option(select="selected" value="shannon")
+        | Entropía de Shannon
+      option(value="gini")
+        | Índice de Gini
+    button.button.mb-1
       | Crear árbol
 </template>
 
@@ -16,7 +22,9 @@ export default {
   data () {
     return {
       csvData: '',
-      predAttr: ''
+      predAttr: '',
+      minNodeCount: '',
+      gainFunc: 'shannon'
     }
   },
   methods: {
@@ -45,6 +53,7 @@ $view-max-width: 600px;
   flex-direction: column;
   width: 100%;
   max-width: $view-max-width;
+  align-items: center;
 
   textarea {
     height: 100px;
@@ -57,5 +66,23 @@ $view-max-width: 600px;
 
 .mb-1 {
   margin-bottom: 10px;
+}
+
+.mb-2 {
+  margin-bottom: 20px;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.button {
+  background-color: #42b983;
+  color: white;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  width: 250px;
 }
 </style>
