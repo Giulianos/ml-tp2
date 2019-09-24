@@ -5,8 +5,8 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
+	"strconv"
 	"sync"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
@@ -45,16 +45,29 @@ func HandleNewTree(dt *decisiontree.DecisionTree, dtMutex *sync.Mutex) http.Hand
 
 		// Create dataset from received csv
 		examples, err := csvToExamples(request.Body)
-		log.Print(examples)
 
 		// Get predicted attribute
-		predAttr := request.URL.Query()["pred-attr"][0]
-		log.Println(predAttr)
+		query := request.URL.Query()
+		predAttr := query["predAttr"][0]
+		gainFunc := query["gainFunc"][0]
+		minNodeCount := query["minNodeCount"][0]
+
+		if minNodeCount == "" {
+			minNodeCount = "1"
+		}
 
 		// Create tree
 		tree := decisiontree.New(predAttr)
-		tree.SetGainFunction(decisiontree.GINI)
-		tree.SetMaxSplits(3)
+
+		// Set parameters
+		if gainFunc == "gini" {
+			tree.SetGainFunction(decisiontree.GINI)
+		} else {
+			tree.SetGainFunction(decisiontree.SHANNON_ENTROPY)
+		}
+		numericMinNodeCount, _ := strconv.ParseInt(minNodeCount, 10, 64)
+
+		tree.SetMinSplitCount(int(numericMinNodeCount))
 		err = tree.Fit(examples)
 
 		if err != nil {
@@ -67,7 +80,6 @@ func HandleNewTree(dt *decisiontree.DecisionTree, dtMutex *sync.Mutex) http.Hand
 			dtMutex.Unlock()
 			writer.WriteHeader(200)
 			bufWriter.WriteString("OK!")
-			log.Print(*dt)
 		}
 		bufWriter.Flush()
 	}
