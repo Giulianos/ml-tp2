@@ -267,6 +267,17 @@ Se implementó un programa que calcula la cantidad de palabras promedio que tien
 
 Al correrlo con el conjunto de datos provisto, el resultado es que los comentarios con una estrella tienen en promedio $12.22$ palabras.
 
+\subsection{Implementación del algoritmo K-NN}
+El algoritmo implementado cumple con la interfaz \bold{Classifier} explicada en la primer sección.
+
+Como entrenamiento, simplemente se guardan todos los ejemplos en el clasificador.
+
+Para clasificar, se crea un heap y se van agregando los ejemplos del conjunto de entrenamiento de manera que el ejemplo mas alejado quede en la raíz del árbol. Cuando se llega a que el tamaño del heap supera en 1 a $K$, se elimina el nodo raíz, manteniendo el tamaño del heap en $K$. Se repite este procedimiento por cada ejemplo guardado, y al finalizar, en el heap se encuentran los K vecinos mas cercanos.
+
+Luego se crea un mapa donde las claves son las clases, y los valores son las contribuciones de los vecinos mas cercanos a cada una de ellas. Si se desea utilizar pesos, esta contribución es la inversa del cuadrado de la distancia, sino es 1. Finalmente, la clasificación es la clave con valor máximo.
+
+\newpage
+
 \subsection{Conjunto de entrenamiento}
 Se dividieron los datos en un conjunto de entrenamiento y otro de prueba con 70\% y 30\% de los datos respectivamente de forma aleatoria con el programa \bold{splitset} comentado en el ejercicio anterior.
 
