@@ -1,17 +1,12 @@
 package decisiontree
 
 import (
-	"log"
 	"math"
 
 	"github.com/Giulianos/ml-decision-tree/classifier"
 )
 
 func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {
-
-	if len(examples) == 18 {
-		log.Printf("Size: %d\n", len(examples))
-	}
 
 	sameClass := dt.isDataPure(examples)
 
@@ -83,8 +78,6 @@ func (dt *DecisionTree) buildValSubTrees(examples []classifier.Example, attr str
 
 func (dt DecisionTree) splitData(examples []classifier.Example, attr string) map[string][]classifier.Example {
 	splittedData := map[string][]classifier.Example{}
-	log.Printf("Splitted at %s", attr)
-
 	for _, example := range examples {
 		value := example[attr]
 		_, ok := splittedData[value]
