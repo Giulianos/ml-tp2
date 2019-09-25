@@ -4,8 +4,8 @@ import (
 	"container/heap"
 	"math"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
-	"github.com/Giulianos/ml-decision-tree/knn/neighborheap"
+	"github.com/Giulianos/ml-tp2/classifier"
+	"github.com/Giulianos/ml-tp2/knn/neighborheap"
 )
 
 type distanceFunc func(ex1, ex2 classifier.Example) float64

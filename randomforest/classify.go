@@ -1,6 +1,6 @@
 package randomforest
 
-import "github.com/Giulianos/ml-decision-tree/classifier"
+import "github.com/Giulianos/ml-tp2/classifier"
 
 func (rf RandomForest) Classify(example classifier.Example) (string, float64) {
 	classifications := make(map[string]float64)

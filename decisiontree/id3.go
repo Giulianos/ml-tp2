@@ -3,7 +3,7 @@ package decisiontree
 import (
 	"math"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 func (dt *DecisionTree) buildTree(examples []classifier.Example) (Node, error) {

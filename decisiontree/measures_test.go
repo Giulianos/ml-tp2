@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 var testExamples = []classifier.Example{
@@ -25,7 +25,7 @@ var testExamples = []classifier.Example{
 }
 
 func TestEntropy(t *testing.T) {
-	dt := NewDecisionTree("juega")
+	dt := New("juega")
 
 	err := dt.Fit(testExamples)
 
@@ -42,7 +42,7 @@ func TestEntropy(t *testing.T) {
 }
 
 func TestSVEntropy(t *testing.T) {
-	dt := NewDecisionTree("juega")
+	dt := New("juega")
 
 	err := dt.Fit(testExamples)
 
@@ -59,7 +59,7 @@ func TestSVEntropy(t *testing.T) {
 }
 
 func TestGain(t *testing.T) {
-	dt := NewDecisionTree("juega")
+	dt := New("juega")
 
 	err := dt.Fit(testExamples)
 

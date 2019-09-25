@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"net/http"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/Giulianos/ml-tp2/decisiontree"
 )
 
 func HandleGetGraph(dt *decisiontree.DecisionTree) http.HandlerFunc {

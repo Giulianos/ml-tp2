@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 func TestGetNearest(t *testing.T) {

@@ -1,6 +1,6 @@
 package neighborheap
 
-import "github.com/Giulianos/ml-decision-tree/classifier"
+import "github.com/Giulianos/ml-tp2/classifier"
 
 type Neighbor struct {
 	Neighbor *classifier.Example

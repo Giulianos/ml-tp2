@@ -3,7 +3,7 @@ package decisiontree
 import (
 	"log"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 func (dt DecisionTree) Classify(example classifier.Example) (string, float64) {

@@ -7,12 +7,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/Giulianos/ml-decision-tree/randomforest"
+	"github.com/Giulianos/ml-tp2/randomforest"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/Giulianos/ml-tp2/decisiontree"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
-	"github.com/Giulianos/ml-decision-tree/marshalling"
+	"github.com/Giulianos/ml-tp2/classifier"
+	"github.com/Giulianos/ml-tp2/marshalling"
 )
 
 func loadDataset(filename string) ([]classifier.Example, error) {

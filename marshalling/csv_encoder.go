@@ -4,7 +4,7 @@ import (
 	"encoding/csv"
 	"io"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 func UnmarshallCSV(reader csv.Reader) ([]classifier.Example, error) {

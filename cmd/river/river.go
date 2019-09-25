@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/Giulianos/ml-tp2/decisiontree"
 )
 
 func main() {

@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/Giulianos/ml-tp2/decisiontree"
 	"github.com/gorilla/handlers"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 type DecisionTree struct {

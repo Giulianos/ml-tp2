@@ -8,9 +8,9 @@ import (
 	"math/rand"
 	"os"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 
-	"github.com/Giulianos/ml-decision-tree/marshalling"
+	"github.com/Giulianos/ml-tp2/marshalling"
 )
 
 func randomSplit(examples []classifier.Example, testPortion float64) (train []classifier.Example, test []classifier.Example) {

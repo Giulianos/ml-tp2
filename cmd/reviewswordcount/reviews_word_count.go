@@ -8,8 +8,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
-	"github.com/Giulianos/ml-decision-tree/marshalling"
+	"github.com/Giulianos/ml-tp2/classifier"
+	"github.com/Giulianos/ml-tp2/marshalling"
 )
 
 func loadDataset(filename string) ([]classifier.Example, error) {

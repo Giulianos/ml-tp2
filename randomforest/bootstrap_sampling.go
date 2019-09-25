@@ -1,6 +1,6 @@
 package randomforest
 
-import "github.com/Giulianos/ml-decision-tree/classifier"
+import "github.com/Giulianos/ml-tp2/classifier"
 
 func (rf RandomForest) getBootstrapSample(examples []classifier.Example) []classifier.Example {
 	sample := make([]classifier.Example, len(examples))

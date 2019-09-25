@@ -1,7 +1,7 @@
 package marshalling
 
 import (
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 )
 
 func UnmarshallRecord(headers []string, record []string) classifier.Example {

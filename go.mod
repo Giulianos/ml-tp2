@@ -1,4 +1,4 @@
-module github.com/Giulianos/ml-decision-tree
+module github.com/Giulianos/ml-tp2
 
 go 1.12
 

@@ -3,9 +3,9 @@ package randomforest
 import (
 	"math/rand"
 
-	"github.com/Giulianos/ml-decision-tree/classifier"
+	"github.com/Giulianos/ml-tp2/classifier"
 
-	"github.com/Giulianos/ml-decision-tree/decisiontree"
+	"github.com/Giulianos/ml-tp2/decisiontree"
 )
 
 type RandomForest struct {
